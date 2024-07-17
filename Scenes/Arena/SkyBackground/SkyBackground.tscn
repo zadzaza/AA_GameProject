@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfbkighyrk7oc"]
+
+[ext_resource type="Script" path="res://Scenes/Arena/SkyBackground/SkyBackground.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://c7uftq4yivmw6" path="res://Scenes/Arena/SkyBackground/Cloud.tscn" id="2"]
+
+[node name="SkyBackground" type="Node2D"]
+z_index = -2
+script = ExtResource("1")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -62.0
+offset_top = -83.0
+offset_right = 2002.0
+offset_bottom = 1150.0
+color = Color(0.92549, 0.92549, 0.92549, 1)
+
+[node name="Sun" type="Node2D" parent="."]
+
+[node name="Cloud" parent="." instance=ExtResource("2")]
+position = Vector2(853, 489)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

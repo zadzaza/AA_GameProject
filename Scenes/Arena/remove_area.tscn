@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddl7qrpfgah7s"]
+
+[ext_resource type="Script" path="res://Scenes/Arena/remove_area.gd" id="1_iuw4c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kccai"]
+size = Vector2(2728, 1739)
+
+[node name="RemoveArea" type="Node2D"]
+position = Vector2(960, 540)
+script = ExtResource("1_iuw4c")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 526
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_kccai")
+
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

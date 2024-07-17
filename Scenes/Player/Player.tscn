@@ -1,0 +1,105 @@
+[gd_scene load_steps=11 format=3 uid="uid://cdwxrigc25xwv"]
+
+[ext_resource type="Texture2D" uid="uid://dyyxhby103erk" path="res://Sprites/Tiles/character_squareRed.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://b22f5qb2r8y5a" path="res://Sprites/Tiles/item_hatTop.png" id="2"]
+[ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="3"]
+[ext_resource type="PackedScene" uid="uid://bmp02tjpna74v" path="res://Scenes/Weapon/Gun/Gun.tscn" id="4"]
+
+[sub_resource type="PhysicsMaterial" id="2"]
+friction = 0.0
+bounce = 0.45
+
+[sub_resource type="CapsuleShape2D" id="1"]
+radius = 36.0
+height = 104.0
+
+[sub_resource type="RectangleShape2D" id="3"]
+size = Vector2(68, 60)
+
+[sub_resource type="Animation" id="5"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VisualPlayer/Node2D:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="4"]
+resource_name = "walk"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VisualPlayer/Node2D:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 3.0, 0.0, -3.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o5733"]
+_data = {
+"RESET": SubResource("5"),
+"walk": SubResource("4")
+}
+
+[node name="Player" type="RigidBody2D" groups=["player"]]
+z_index = 1
+collision_layer = 2
+collision_mask = 5
+mass = 50.0
+physics_material_override = SubResource("2")
+gravity_scale = 0.5
+center_of_mass_mode = 1
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("3")
+
+[node name="VisualPlayer" type="Node2D" parent="."]
+
+[node name="Node2D" type="Node2D" parent="VisualPlayer"]
+
+[node name="CharacterSquareRed" type="Sprite2D" parent="VisualPlayer/Node2D"]
+texture = ExtResource("1")
+
+[node name="ItemHatTop" type="Sprite2D" parent="VisualPlayer/Node2D"]
+position = Vector2(0, -81.5)
+texture = ExtResource("2")
+
+[node name="Gun" parent="." instance=ExtResource("4")]
+position = Vector2(0, 23)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 10)
+shape = SubResource("1")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(1, 32)
+shape = SubResource("3")
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_o5733")
+}
+speed_scale = 3.0
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2(0, 23)
+node_a = NodePath("..")
+node_b = NodePath("../Gun")
+bias = 0.05
+softness = 11.0
