@@ -29,7 +29,10 @@ layer_1/z_index = -1
 layer_1/tile_data = PackedInt32Array(327683, 655383, 2, 393219, 655383, 3, 327692, 655383, 4, 393228, 655383, 5, 393218, 655383, 7, 393230, 655383, 6, 524294, 393239, 6, 524295, 393239, 6, 524296, 393239, 6, 524297, 393239, 6)
 
 [node name="Player" parent="." instance=ExtResource("5")]
-position = Vector2(678, 748)
+position = Vector2(893, 759)
+
+[node name="Player2" parent="." instance=ExtResource("5")]
+position = Vector2(1016, 754)
 
 [node name="Tower" parent="." instance=ExtResource("4")]
 position = Vector2(1367, 775)
@@ -38,7 +41,7 @@ position = Vector2(1367, 775)
 z_index = 1
 
 [node name="RigidBody2D" parent="." instance=ExtResource("6")]
-position = Vector2(65, 533)
+position = Vector2(981, 1218)
 
 [node name="Label" type="Label" parent="RigidBody2D"]
 offset_left = -29.0
@@ -52,7 +55,7 @@ text = "Васян"
 horizontal_alignment = 1
 
 [node name="RigidBody2D2" parent="." instance=ExtResource("6")]
-position = Vector2(63, 662)
+position = Vector2(979, 1347)
 
 [node name="Label" type="Label" parent="RigidBody2D2"]
 offset_left = -29.0
@@ -66,10 +69,6 @@ text = "Стасян"
 horizontal_alignment = 1
 
 [node name="RigidBody2D3" parent="." instance=ExtResource("6")]
-position = Vector2(63, 359)
+position = Vector2(979, 1044)
 
 [node name="RemoveArea" parent="." instance=ExtResource("7_n1o10")]
-visible = false
-
-[node name="Player2" parent="." instance=ExtResource("5")]
-position = Vector2(999, 761)

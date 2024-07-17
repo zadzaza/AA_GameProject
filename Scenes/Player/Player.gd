@@ -24,6 +24,8 @@ var floor_h_velocity: float = 0.0
 var airborne_time: float = 1e20
 var shoot_time: float = 1e20
 
+var force_var: Vector2 = Vector2.ZERO
+
 var push_pos: Vector2
 var is_push: bool = false
 
@@ -180,7 +182,7 @@ func _integrate_forces(state) -> void:
 	
 	if is_push:
 		#state.apply_impulse(Vector2(4600*5,-3000*5), Vector2(-230*5,0))
-		state.apply_central_force(-push_pos * 50000)
+		state.apply_central_force(push_pos * 25000)
 		is_push = false
 	
 #	state.transform = new_transform
@@ -199,6 +201,5 @@ func play_walk(velocity: Vector2) -> void:
 	else:
 		animation_player.pause()
 
-func push(pos: Vector2) -> void:
-	push_pos = to_local(pos)
-	is_push = true
+func push() -> void:
+	apply_central_impulse(force_var * 125)

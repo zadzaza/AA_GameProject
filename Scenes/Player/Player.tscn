@@ -10,7 +10,7 @@ friction = 0.0
 bounce = 0.45
 
 [sub_resource type="CapsuleShape2D" id="1"]
-radius = 36.0
+radius = 35.0
 height = 104.0
 
 [sub_resource type="RectangleShape2D" id="3"]
@@ -83,7 +83,7 @@ texture = ExtResource("2")
 position = Vector2(0, 23)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 10)
+position = Vector2(0, 10)
 shape = SubResource("1")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
