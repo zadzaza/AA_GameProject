@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var cloud = $Sprite2D
+@onready var cloud: Sprite2D = $Sprite2D
 var cloud_sprites: Array = [preload("res://Sprites/Tiles/background_cloudA.png"), preload("res://Sprites/Tiles/background_cloudB.png")]
 var speed = randf_range(55.0, 65.0)
 

@@ -38,7 +38,7 @@ position = Vector2(1367, 775)
 z_index = 1
 
 [node name="RigidBody2D" parent="." instance=ExtResource("6")]
-position = Vector2(681, 357)
+position = Vector2(65, 533)
 
 [node name="Label" type="Label" parent="RigidBody2D"]
 offset_left = -29.0
@@ -52,7 +52,7 @@ text = "Васян"
 horizontal_alignment = 1
 
 [node name="RigidBody2D2" parent="." instance=ExtResource("6")]
-position = Vector2(679, 486)
+position = Vector2(63, 662)
 
 [node name="Label" type="Label" parent="RigidBody2D2"]
 offset_left = -29.0
@@ -66,6 +66,10 @@ text = "Стасян"
 horizontal_alignment = 1
 
 [node name="RigidBody2D3" parent="." instance=ExtResource("6")]
-position = Vector2(679, 183)
+position = Vector2(63, 359)
 
 [node name="RemoveArea" parent="." instance=ExtResource("7_n1o10")]
+visible = false
+
+[node name="Player2" parent="." instance=ExtResource("5")]
+position = Vector2(999, 761)

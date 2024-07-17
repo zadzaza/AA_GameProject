@@ -12,17 +12,20 @@ const MAX_SHOOT_POSE_TIME = .3
 const MAX_FLOOR_AIRBORNE_TIME = .15
 const BALANCE_EQUAL = .5
 
-var siding_left = false
-var anim = ""
-var jumping = false
-var stopping_jump = false
-var shooting = false
-var is_flipping = false
+var siding_left: bool = false
+var anim: String = ""
+var jumping: bool = false
+var stopping_jump: bool = false
+var shooting: bool = false
+var is_flipping: bool = false
 
 var floor_h_velocity: float = 0.0
 
 var airborne_time: float = 1e20
 var shoot_time: float = 1e20
+
+var push_pos: Vector2
+var is_push: bool = false
 
 @onready var visual = $VisualPlayer as Node2D
 @onready var ray_cast = $RayCast2D as RayCast2D
@@ -175,9 +178,10 @@ func _integrate_forces(state) -> void:
 	velocity += state.get_total_gravity() * step
 	state.set_linear_velocity(velocity)
 	
-	if f_interact:
-		state.apply_impulse(Vector2(4600*5,-3000*5), Vector2(-230*5,0))
-#		state.apply_torque_impulse(60000)
+	if is_push:
+		#state.apply_impulse(Vector2(4600*5,-3000*5), Vector2(-230*5,0))
+		state.apply_central_force(-push_pos * 50000)
+		is_push = false
 	
 #	state.transform = new_transform
 	play_walk(velocity)
@@ -194,3 +198,7 @@ func play_walk(velocity: Vector2) -> void:
 		animation_player.play("walk")
 	else:
 		animation_player.pause()
+
+func push(pos: Vector2) -> void:
+	push_pos = to_local(pos)
+	is_push = true

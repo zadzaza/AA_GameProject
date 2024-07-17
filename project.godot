@@ -13,7 +13,7 @@ config_version=5
 config/name="AA_GameProject"
 run/main_scene="res://Scenes/Arena/Arena.tscn"
 config/features=PackedStringArray("4.3")
-run/max_fps=60
+run/max_fps=75
 config/icon="res://icon.png"
 
 [display]

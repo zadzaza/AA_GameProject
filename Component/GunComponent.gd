@@ -1,5 +1,4 @@
 extends Node
-class_name GunComponent
 
 signal shoot()
 signal not_shoot()

@@ -15,5 +15,5 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	if ray_cast.is_colliding():
-		ray_cast.get_collider().queue_free()
+		ray_cast.get_collider().push(ray_cast.get_collision_point())
 		self.queue_free()

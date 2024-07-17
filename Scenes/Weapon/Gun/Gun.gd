@@ -1,6 +1,5 @@
 extends RigidBody2D
 
-@onready var gun_component: GunComponent = $GunComponent
 @onready var gun_visual: Node2D = $GunVisual
 @onready var animation_player = $AnimationPlayer
 @onready var timer = $Timer
