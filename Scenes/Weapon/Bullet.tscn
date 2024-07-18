@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cnnbga1jmhrb4"]
+[gd_scene load_steps=5 format=3 uid="uid://cnnbga1jmhrb4"]
 
 [ext_resource type="Texture2D" uid="uid://dcs10s7lhkyab" path="res://Sprites/Tiles/effect_shot.png" id="1"]
 [ext_resource type="Script" path="res://Scenes/Weapon/Bullet.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://c2run6udhmr6u" path="res://Component/physic_component.tscn" id="2_ufpab"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5pqbv"]
 size = Vector2(35, 8)
@@ -12,6 +13,8 @@ collision_mask = 0
 script = ExtResource("2")
 greatest_force = 150
 farthest_mar = 100
+
+[node name="PhysicComponent" parent="." instance=ExtResource("2_ufpab")]
 
 [node name="EffectShot" type="Sprite2D" parent="."]
 scale = Vector2(0.5625, 0.5625)

@@ -1,11 +1,10 @@
 extends RigidBody2D
 
 @onready var gun_visual: Node2D = $GunVisual
-@onready var animation_player = $AnimationPlayer
-@onready var timer = $Timer
+@onready var timer: Timer = $Timer
 @onready var explosion_spawn: Node2D = $GunVisual/Sprites/ExplosionSpawn
 @onready var sprites: Node2D = $GunVisual/Sprites
-@onready var arena_node = get_parent().get_parent()
+@onready var arena_node: Node2D = get_parent().get_parent()
 
 var can_shoot = true
 
@@ -14,7 +13,6 @@ func _physics_process(delta: float) -> void:
 		var bullet = load("res://Scenes/Weapon/Bullet.tscn").instantiate()
 		add_child(bullet)
 		bullet.reparent(arena_node)
-		
 		var explosion = load("res://Scenes/Weapon/explosion.tscn").instantiate()
 		sprites.add_child(explosion)
 		explosion.position = explosion_spawn.position
@@ -24,8 +22,6 @@ func _physics_process(delta: float) -> void:
 		position += lerp(Vector2.ZERO, mouse_vec * -Vector2(gun_visual.scale.x * 100, gun_visual.scale.x * 100), 0.1)
 		position.x = clamp(position.x,-40, 40)
 		position.y = clamp(position.y,-40, 40)
-		
-		#get_parent().push(get_global_mouse_position())
 		
 		can_shoot = false
 		timer.start()
