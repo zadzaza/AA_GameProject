@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dyyxhby103erk" path="res://Sprites/Tiles/character_squareRed.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://b22f5qb2r8y5a" path="res://Sprites/Tiles/item_hatTop.png" id="2"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="3"]
-[ext_resource type="PackedScene" uid="uid://bmp02tjpna74v" path="res://Scenes/Weapon/Gun/Gun.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://bmp02tjpna74v" path="res://Scenes/Weapon/Gun/Gun.tscn" id="4_5714l"]
 
 [sub_resource type="PhysicsMaterial" id="2"]
 friction = 0.0
@@ -79,9 +79,6 @@ texture = ExtResource("1")
 position = Vector2(0, -81.5)
 texture = ExtResource("2")
 
-[node name="Gun" parent="." instance=ExtResource("4")]
-position = Vector2(0, 23)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 10)
 shape = SubResource("1")
@@ -96,6 +93,9 @@ libraries = {
 "": SubResource("AnimationLibrary_o5733")
 }
 speed_scale = 3.0
+
+[node name="Gun" parent="." instance=ExtResource("4_5714l")]
+position = Vector2(0, 23)
 
 [node name="PinJoint2D" type="PinJoint2D" parent="."]
 position = Vector2(0, 23)

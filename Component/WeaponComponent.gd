@@ -34,8 +34,6 @@ func _process(delta):
 		if strength >= max_strength:
 			strength_increment = 0
 			strength = max_strength
-			emit_signal("attack_released")
-			is_cooldown = true
 	else:
 		strength_decrement = max_strength_decrement
 		strength -= strength_decrement * delta
@@ -45,7 +43,6 @@ func _process(delta):
 			strength_decrement = 0
 			strength = MIN_STRENGTH
 			is_cooldown = false
-	print(strength)
 	
 func shoot():
 	strength = max_strength

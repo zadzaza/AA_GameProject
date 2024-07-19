@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bmp02tjpna74v"]
+[gd_scene load_steps=6 format=3 uid="uid://bmp02tjpna74v"]
 
-[ext_resource type="Script" path="res://Scenes/Weapon/Gun/GunVisual.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://b6pt70cgtiexq" path="res://Component/GunComponent.tscn" id="2"]
+[ext_resource type="Script" path="res://Scenes/Weapon/Visual.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://d3wmw8t7dt8c5" path="res://Sprites/Tiles/character_handRed.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://d2yhq1vw6j3cg" path="res://Sprites/Tiles/item_gun.png" id="4"]
 [ext_resource type="Script" path="res://Scenes/Weapon/Gun/Gun.gd" id="5"]
@@ -14,9 +13,8 @@ collision_layer = 0
 collision_mask = 0
 mass = 0.15
 gravity_scale = 0.0
+sleeping = true
 script = ExtResource("5")
-
-[node name="GunComponent" parent="." instance=ExtResource("2")]
 
 [node name="GunVisual" type="Node2D" parent="." groups=["weapon_visual"]]
 script = ExtResource("1")
@@ -25,7 +23,7 @@ script = ExtResource("1")
 position = Vector2(38, 0)
 
 [node name="ExplosionSpawn" type="Node2D" parent="GunVisual/Sprites"]
-position = Vector2(67, -2)
+position = Vector2(63, -1)
 
 [node name="ItemGun" type="Sprite2D" parent="GunVisual/Sprites"]
 position = Vector2(0, 1.5)
@@ -42,6 +40,7 @@ texture = ExtResource("3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 modulate = Color(0, 1, 0.368627, 1)
 shape = SubResource("1")
+disabled = true
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.4

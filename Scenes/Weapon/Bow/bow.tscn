@@ -1,0 +1,112 @@
+[gd_scene load_steps=11 format=3 uid="uid://kvc3ejlarnrn"]
+
+[ext_resource type="Texture2D" uid="uid://woshinfm2g4" path="res://Sprites/Tiles/item_arrow.png" id="1_3tkt6"]
+[ext_resource type="Script" path="res://Scenes/Weapon/Visual.gd" id="1_7n8e8"]
+[ext_resource type="Script" path="res://Scenes/Weapon/Bow/bow.gd" id="1_m30o4"]
+[ext_resource type="Texture2D" uid="uid://mq6dr2o11o4q" path="res://Sprites/Tiles/item_bow.png" id="2_6olk3"]
+[ext_resource type="PackedScene" uid="uid://cglflip7ytbnl" path="res://Component/WeaponComponent.tscn" id="2_igi77"]
+[ext_resource type="Texture2D" uid="uid://d3wmw8t7dt8c5" path="res://Sprites/Tiles/character_handRed.png" id="4_effcf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tmk26"]
+
+[sub_resource type="Animation" id="Animation_bis5g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BowVisual/Sprites/CharacterHandRed:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-16.321, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BowVisual/Sprites/ItemArrow:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-16, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_owtkj"]
+resource_name = "pull"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BowVisual/Sprites/CharacterHandRed:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 0.241485),
+"update": 0,
+"values": [Vector2(-16.321, 0), Vector2(-49, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BowVisual/Sprites/ItemArrow:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 0.241485),
+"update": 0,
+"values": [Vector2(-16, 0), Vector2(-49, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_juguh"]
+_data = {
+"RESET": SubResource("Animation_bis5g"),
+"pull": SubResource("Animation_owtkj")
+}
+
+[node name="Bow" type="RigidBody2D"]
+mass = 0.3
+gravity_scale = 0.0
+sleeping = true
+script = ExtResource("1_m30o4")
+
+[node name="WeaponComponent" parent="." instance=ExtResource("2_igi77")]
+max_strength = 0.2
+
+[node name="BowVisual" type="Node2D" parent="."]
+script = ExtResource("1_7n8e8")
+
+[node name="Sprites" type="Node2D" parent="BowVisual"]
+position = Vector2(63, -20)
+
+[node name="ItemArrow" type="Sprite2D" parent="BowVisual/Sprites"]
+position = Vector2(-16, 0)
+texture = ExtResource("1_3tkt6")
+offset = Vector2(44.6794, 0)
+
+[node name="CharacterHandRed" type="Sprite2D" parent="BowVisual/Sprites"]
+position = Vector2(-16.321, 0)
+rotation = 2.69174
+texture = ExtResource("4_effcf")
+
+[node name="ItemBow" type="Sprite2D" parent="BowVisual/Sprites"]
+texture = ExtResource("2_6olk3")
+
+[node name="CharacterHandRed2" type="Sprite2D" parent="BowVisual/Sprites"]
+position = Vector2(4, 25)
+rotation = 0.992368
+texture = ExtResource("4_effcf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_tmk26")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_juguh")
+}
