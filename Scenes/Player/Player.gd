@@ -32,18 +32,19 @@ var is_push: bool = false
 @onready var visual = $VisualPlayer as Node2D
 @onready var ray_cast = $RayCast2D as RayCast2D
 @onready var animation_player = $AnimationPlayer as AnimationPlayer
+@onready var trace: CPUParticles2D = $Trace
 
 @onready var weapon_component: WeaponComponent = $WeaponComponent
 
 func _integrate_forces(state) -> void:
-	if Input.is_action_just_pressed("spawn"):
-		var rigid = load("res://RigidBody2D.tscn").instantiate()
-		get_parent().add_child(rigid)
-		rigid.global_position = get_global_mouse_position()
+	#if Input.is_action_just_pressed("spawn"):
+		#var rigid = load("res://RigidBody2D.tscn").instantiate()
+		#get_parent().add_child(rigid)
+		#rigid.global_position = get_global_mouse_position()
+		
 #	var rotation_radians = deg2rad(rotation_degrees)
 #	var new_rotation = clamp(rotation_radians, -.8, .8)
 #	var new_transform = Transform2D(new_rotation, position)
-	$PinJoint2D.disable_collision
 	var velocity = state.get_linear_velocity()
 	var step = state.get_step()
 	var current_angular_velocity: float
@@ -116,11 +117,8 @@ func _integrate_forces(state) -> void:
 			jumping = true
 			stopping_jump = false
 
-		# Check siding.
-		if velocity.x < 0 and move_left:
-			new_siding_left = true
-		elif velocity.x > 0 and move_right:
-			new_siding_left = false
+		if (velocity.x > 180 or velocity.x < -180) and (move_left or move_right):
+			trace.emitting = true
 		if jumping:
 			new_anim = "jumping"
 		elif abs(velocity.x) < .1:

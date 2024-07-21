@@ -17,6 +17,7 @@ collision_mask = 0
 script = ExtResource("2")
 greatest_force = 150
 farthest_mar = 100
+gravity = 450
 
 [node name="PhysicComponent" parent="." instance=ExtResource("2_ufpab")]
 
@@ -38,16 +39,15 @@ collision_mask = 6
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2(18, 0)
-rotation = -3.14159
 emitting = false
-amount = 60
-lifetime = 0.17
+amount = 70
+lifetime = 0.2
 one_shot = true
 emission_shape = 3
 emission_rect_extents = Vector2(13.19, 6)
 gravity = Vector2(-200, 0)
 radial_accel_max = 100.0
-scale_amount_min = 3.0
-scale_amount_max = 3.0
+scale_amount_min = 5.0
+scale_amount_max = 5.0
 scale_amount_curve = SubResource("Curve_ayw7w")
 color = Color(0.988235, 0.360784, 0.396078, 1)

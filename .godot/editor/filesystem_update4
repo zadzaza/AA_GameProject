@@ -4,9 +4,12 @@ res://Resources/Tilemap/ArenaTileSet.tres
 res://Scenes/Weapon/Bow/bow.tscn
 res://Component/WeaponComponent.tscn
 res://Scenes/Player/Player.tscn
-res://Scenes/Weapon/Gun/Gun.tscn
-res://Scenes/Weapon/Gun/Bullet.tscn
 res://Scenes/Effects/explosion.tscn
-res://Scenes/Weapon/Gun/Bullet.gd
-res://Scenes/Effects/explosion.gd
+res://Scenes/Weapon/Gun/Bullet.tscn
+res://Scenes/Weapon/Gun/Gun.tscn
+res://Scenes/Weapon/trajectory.tscn
 res://Scenes/Weapon/Gun/Gun.gd
+res://Scenes/Weapon/trajectory.gd
+res://Resources/Shaders/scrolling_texture.gdshader
+res://Scenes/Player/Player.gd
+res://Scenes/Weapon/Visual.gd

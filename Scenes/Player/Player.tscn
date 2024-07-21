@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cdwxrigc25xwv"]
+[gd_scene load_steps=12 format=3 uid="uid://cdwxrigc25xwv"]
 
 [ext_resource type="Texture2D" uid="uid://dyyxhby103erk" path="res://Sprites/Tiles/character_squareRed.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://b22f5qb2r8y5a" path="res://Sprites/Tiles/item_hatTop.png" id="2"]
@@ -8,6 +8,10 @@
 [sub_resource type="PhysicsMaterial" id="2"]
 friction = 0.0
 bounce = 0.45
+
+[sub_resource type="Curve" id="Curve_qh1me"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.386813, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="CapsuleShape2D" id="1"]
 radius = 35.0
@@ -68,6 +72,20 @@ contact_monitor = true
 max_contacts_reported = 4
 script = ExtResource("3")
 
+[node name="Trace" type="CPUParticles2D" parent="."]
+position = Vector2(0, 59)
+emitting = false
+amount = 40
+lifetime = 0.6
+one_shot = true
+emission_shape = 3
+emission_rect_extents = Vector2(20, 5)
+gravity = Vector2(0, -1)
+scale_amount_min = 10.0
+scale_amount_max = 10.0
+scale_amount_curve = SubResource("Curve_qh1me")
+color = Color(0.865166, 0.875054, 0.882986, 1)
+
 [node name="VisualPlayer" type="Node2D" parent="."]
 
 [node name="Node2D" type="Node2D" parent="VisualPlayer"]
@@ -80,10 +98,12 @@ position = Vector2(0, -81.5)
 texture = ExtResource("2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 10)
 shape = SubResource("1")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(1, 32)
 shape = SubResource("3")
 disabled = true

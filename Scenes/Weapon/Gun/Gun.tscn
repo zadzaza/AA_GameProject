@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bmp02tjpna74v"]
+[gd_scene load_steps=7 format=3 uid="uid://bmp02tjpna74v"]
 
 [ext_resource type="Script" path="res://Scenes/Weapon/Visual.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://d3wmw8t7dt8c5" path="res://Sprites/Tiles/character_handRed.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://d2yhq1vw6j3cg" path="res://Sprites/Tiles/item_gun.png" id="4"]
 [ext_resource type="Script" path="res://Scenes/Weapon/Gun/Gun.gd" id="5"]
+[ext_resource type="PackedScene" uid="uid://sienqlja23dl" path="res://Scenes/Weapon/trajectory.tscn" id="5_fj47a"]
 
 [sub_resource type="CircleShape2D" id="1"]
 radius = 20.3961
@@ -11,10 +12,12 @@ radius = 20.3961
 [node name="Gun" type="RigidBody2D"]
 collision_layer = 0
 collision_mask = 0
-mass = 0.15
+mass = 0.3
 gravity_scale = 0.0
 sleeping = true
 script = ExtResource("5")
+
+[node name="Trajectory" parent="." instance=ExtResource("5_fj47a")]
 
 [node name="GunVisual" type="Node2D" parent="." groups=["weapon_visual"]]
 script = ExtResource("1")
@@ -22,7 +25,7 @@ script = ExtResource("1")
 [node name="Sprites" type="Node2D" parent="GunVisual"]
 position = Vector2(38, 0)
 
-[node name="ExplosionSpawn" type="Node2D" parent="GunVisual/Sprites"]
+[node name="ExplosionSpawn" type="Marker2D" parent="GunVisual/Sprites"]
 position = Vector2(63, -1)
 
 [node name="ItemGun" type="Sprite2D" parent="GunVisual/Sprites"]
@@ -43,7 +46,7 @@ shape = SubResource("1")
 disabled = true
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.4
+wait_time = 0.7
 one_shot = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

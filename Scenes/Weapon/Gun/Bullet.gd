@@ -2,14 +2,14 @@ extends CharacterBody2D
 
 @export var greatest_force: int = 100
 @export var farthest_mar: int = 50
-@export var gravity = 550
+@export var gravity = 500
 
 @onready var physic_component: Node = $PhysicComponent
 @onready var ray_cast: RayCast2D = $RayCast2D
 @onready var arena_node: Node2D = get_parent().get_parent()
 @onready var cpu_particles_2d: CPUParticles2D = $CPUParticles2D
 
-var vel: Vector2 = Vector2(350, 0)
+var vel: Vector2 = Vector2.ZERO
 
 var mouse_vec: Vector2
 const SPEED = 80000
@@ -40,5 +40,7 @@ func _physics_process(delta: float) -> void:
 		
 		object.force_var = physic_component.find_force(object_pos, ray_cast)
 		object.push()
+		
+		cpu_particles_2d.reparent(arena_node)
 		
 		self.queue_free()

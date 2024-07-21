@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://sienqlja23dl"]
+
+[ext_resource type="Script" path="res://Scenes/Weapon/trajectory.gd" id="1_ey8rc"]
+[ext_resource type="Texture2D" uid="uid://dx1nkti1f8u4x" path="res://Sprites/Tiles/line.png" id="1_fvqfi"]
+[ext_resource type="Shader" path="res://Resources/Shaders/scrolling_texture.gdshader" id="1_m4ghb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a7jet"]
+shader = ExtResource("1_m4ghb")
+shader_parameter/color = Color(0.988235, 0.360784, 0.396078, 1)
+
+[node name="Trajectory" type="Line2D"]
+modulate = Color(0.988235, 0.360784, 0.396078, 1)
+texture_repeat = 2
+material = SubResource("ShaderMaterial_a7jet")
+width = 30.0
+texture = ExtResource("1_fvqfi")
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+script = ExtResource("1_ey8rc")

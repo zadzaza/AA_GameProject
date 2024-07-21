@@ -2,21 +2,23 @@ extends RigidBody2D
 
 @onready var gun_visual: Node2D = $GunVisual
 @onready var timer: Timer = $Timer
-@onready var explosion_spawn: Node2D = $GunVisual/Sprites/ExplosionSpawn
+@onready var explosion_spawn: Marker2D = $GunVisual/Sprites/ExplosionSpawn
 @onready var sprites: Node2D = $GunVisual/Sprites
+@onready var trajectory: Line2D = $Trajectory
 @onready var arena_node: Node2D = get_parent().get_parent()
 
 var can_shoot = true
+var firing_force: float = 500.0
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("attack") and can_shoot:
-		var bullet = load("res://Scenes/Weapon/Gun/Bullet.tscn").instantiate()
 		var mouse_vec = global_position.direction_to(get_global_mouse_position())
+		var bullet = load("res://Scenes/Weapon/Gun/Bullet.tscn").instantiate()
+		
 		add_child(bullet)
 		bullet.reparent(arena_node)
-		
 		bullet.transform = gun_visual.global_transform
-		bullet.vel = bullet.transform.x * 500
+		bullet.vel = bullet.transform.x * firing_force
 		
 		var explosion = load("res://Scenes/Effects/explosion.tscn").instantiate()
 		explosion_spawn.add_child(explosion)
@@ -31,6 +33,13 @@ func _physics_process(delta: float) -> void:
 		
 		can_shoot = false
 		timer.start()
-
+	
+	if Input.is_action_pressed("aiming") and can_shoot:
+		trajectory.show()
+		trajectory.update_trajectory(delta, 660, 480)
+		trajectory.global_position = explosion_spawn.global_position
+	else:
+		trajectory.hide()
+	
 func _on_timer_timeout() -> void:
 	can_shoot = true

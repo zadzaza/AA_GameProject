@@ -1,6 +1,10 @@
-CPUParticles2D
-PinJoint2D
+AudioStreamPlayer2D
 CollisionShape2D
+StaticBody2D
+CPUParticles2D
+Marker2D
+Line2D
+PinJoint2D
 RigidBody2D
 AnimationPlayer
 Node2D
@@ -8,7 +12,3 @@ Node
 CharacterBody2D
 AnimatableBody2D
 RayCast2D
-StaticBody2D
-Area2D
-Timer
-Label
