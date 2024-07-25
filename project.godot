@@ -25,13 +25,22 @@ window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
 window/vsync/vsync_mode=0
 
+[file_customization]
+
+folder_colors={
+"res://Component/": "red",
+"res://Resources/": "orange",
+"res://Scenes/": "yellow",
+"res://Sprites/": "green"
+}
+
 [global]
 
 gra=false
 
 [global_group]
 
-objects_layer="К ноде в этой группе добавляются различные объекты, по типу пуль, стрел, бомб и т.д."
+entity_layer=""
 
 [gui]
 
@@ -114,6 +123,8 @@ aiming={
 2d_physics/layer_2="team1"
 2d_physics/layer_3="team2"
 2d_physics/layer_4="objects"
+2d_physics/layer_5="projectiles"
+2d_physics/layer_6="tower"
 
 [physics]
 

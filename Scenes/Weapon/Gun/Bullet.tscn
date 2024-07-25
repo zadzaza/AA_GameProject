@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dcs10s7lhkyab" path="res://Sprites/Tiles/effect_shot.png" id="1"]
 [ext_resource type="Script" path="res://Scenes/Weapon/Gun/Bullet.gd" id="2"]
-[ext_resource type="PackedScene" uid="uid://c2run6udhmr6u" path="res://Component/physic_component.tscn" id="2_ufpab"]
+[ext_resource type="PackedScene" uid="uid://btliol4rlh6i5" path="res://Scenes/Weapon/collision_detect.tscn" id="4_1a2xg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5pqbv"]
 size = Vector2(35, 8)
@@ -12,14 +12,9 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [node name="Bullet" type="CharacterBody2D"]
-collision_layer = 512
+collision_layer = 16
 collision_mask = 0
 script = ExtResource("2")
-greatest_force = 150
-farthest_mar = 100
-gravity = 450
-
-[node name="PhysicComponent" parent="." instance=ExtResource("2_ufpab")]
 
 [node name="EffectShot" type="Sprite2D" parent="."]
 scale = Vector2(0.5625, 0.5625)
@@ -30,24 +25,23 @@ visible = false
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_5pqbv")
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-visible = false
+[node name="CollisionDetect" parent="." instance=ExtResource("4_1a2xg")]
 position = Vector2(-17, 0)
 rotation = -1.57056
-target_position = Vector2(0.00921758, 39)
-collision_mask = 6
+target_position = Vector2(0.00898124, 38)
+damage_value = 3
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2(18, 0)
 emitting = false
-amount = 70
+amount = 30
 lifetime = 0.2
 one_shot = true
 emission_shape = 3
 emission_rect_extents = Vector2(13.19, 6)
 gravity = Vector2(-200, 0)
 radial_accel_max = 100.0
-scale_amount_min = 5.0
-scale_amount_max = 5.0
+scale_amount_min = 7.0
+scale_amount_max = 7.0
 scale_amount_curve = SubResource("Curve_ayw7w")
 color = Color(0.988235, 0.360784, 0.396078, 1)

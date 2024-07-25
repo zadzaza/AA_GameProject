@@ -1,0 +1,90 @@
+[gd_scene load_steps=10 format=3 uid="uid://daxyvkoinhkve"]
+
+[ext_resource type="Script" path="res://Scenes/DefenceTower/defence_tower.gd" id="1_b68ol"]
+[ext_resource type="Texture2D" uid="uid://dk1861uo1tf2w" path="res://Sprites/Tiles/tile_castle.png" id="1_do8j5"]
+[ext_resource type="Texture2D" uid="uid://cgsorec3hsqt3" path="res://Sprites/Tiles/tile_arch.png" id="2_ctot8"]
+[ext_resource type="Texture2D" uid="uid://brfb6h3x6ikn2" path="res://Sprites/Tiles/tile_archColumns.png" id="3_06tme"]
+[ext_resource type="Texture2D" uid="uid://bj5bfa66kcwfk" path="res://Sprites/Tiles/tile_stone.png" id="4_ogra3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_880jm"]
+size = Vector2(3.5, 50.625)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_li6np"]
+size = Vector2(92, 227)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mlbca"]
+size = Vector2(81, 65)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gcjbb"]
+size = Vector2(251.5, 383)
+
+[node name="DefenceTower" type="Node2D"]
+script = ExtResource("1_b68ol")
+max_strength_value = 1000
+
+[node name="PlayerCollision" type="StaticBody2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+
+[node name="TileCastle" type="Sprite2D" parent="PlayerCollision"]
+position = Vector2(0, -359)
+texture = ExtResource("1_do8j5")
+
+[node name="TileStone" type="Sprite2D" parent="PlayerCollision"]
+position = Vector2(0, -240)
+texture = ExtResource("4_ogra3")
+
+[node name="TileArch" type="Sprite2D" parent="PlayerCollision"]
+position = Vector2(0, -120)
+texture = ExtResource("2_ctot8")
+
+[node name="TileArchColumns" type="Sprite2D" parent="PlayerCollision"]
+texture = ExtResource("3_06tme")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollision"]
+position = Vector2(-44, -395.125)
+shape = SubResource("RectangleShape2D_880jm")
+debug_color = Color(0.826065, 0.396889, 0.0256387, 0.42)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="PlayerCollision"]
+position = Vector2(45, -395)
+shape = SubResource("RectangleShape2D_880jm")
+debug_color = Color(0.826065, 0.396889, 0.0256387, 0.42)
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="PlayerCollision"]
+position = Vector2(1, -260.5)
+shape = SubResource("RectangleShape2D_li6np")
+debug_color = Color(0.827451, 0.396078, 0.027451, 0.419608)
+
+[node name="WatchtowerArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WatchtowerArea"]
+position = Vector2(0.5, -407.5)
+shape = SubResource("RectangleShape2D_mlbca")
+
+[node name="OffsetArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OffsetArea"]
+position = Vector2(0, -121.5)
+shape = SubResource("RectangleShape2D_gcjbb")
+debug_color = Color(0, 0.6, 0.7, 0)
+
+[node name="TowerStrength" type="ProgressBar" parent="."]
+offset_left = 87.0
+offset_top = -311.0
+offset_right = 110.0
+offset_bottom = -159.0
+max_value = 1000.0
+step = 1.0
+value = 1000.0
+fill_mode = 3
+show_percentage = false
+
+[connection signal="body_entered" from="WatchtowerArea" to="." method="_on_watchtower_area_body_entered"]
+[connection signal="body_exited" from="WatchtowerArea" to="." method="_on_watchtower_area_body_exited"]
+[connection signal="body_entered" from="OffsetArea" to="." method="_on_offset_area_body_entered"]
+[connection signal="body_exited" from="OffsetArea" to="." method="_on_offset_area_body_exited"]

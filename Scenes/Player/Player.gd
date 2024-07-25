@@ -1,6 +1,10 @@
 extends RigidBody2D
 class_name Player
 
+signal stun(is_stun: bool)
+
+@export var layer = 2
+
 const WALK_ACCEL = 1000.0
 const WALK_DEACCEL = 1000.0
 const WALK_MAX_VELOCITY = 200.0
@@ -10,10 +14,8 @@ const JUMP_VELOCITY = 455.0
 const STOP_JUMP_FORCE = 525.0
 const MAX_SHOOT_POSE_TIME = .3
 const MAX_FLOOR_AIRBORNE_TIME = .15
-const BALANCE_EQUAL = .5
 
 var siding_left: bool = false
-var anim: String = ""
 var jumping: bool = false
 var stopping_jump: bool = false
 var shooting: bool = false
@@ -24,17 +26,18 @@ var floor_h_velocity: float = 0.0
 var airborne_time: float = 1e20
 var shoot_time: float = 1e20
 
-var force_var: Vector2 = Vector2.ZERO
-
 var push_pos: Vector2
 var is_push: bool = false
+var force_var: Vector2
 
 @onready var visual = $VisualPlayer as Node2D
-@onready var ray_cast = $RayCast2D as RayCast2D
-@onready var animation_player = $AnimationPlayer as AnimationPlayer
+@onready var walk_animation = $WalkAnimation as AnimationPlayer
 @onready var trace: CPUParticles2D = $Trace
+@onready var pin_joint_2d: PinJoint2D = $PinJoint2D
 
-@onready var weapon_component: WeaponComponent = $WeaponComponent
+func _ready() -> void:
+	pin_joint_2d.node_b = NodePath("../Weapon/" + get_current_weapon().name)
+	set_collision_layer_value(layer, true)
 
 func _integrate_forces(state) -> void:
 	#if Input.is_action_just_pressed("spawn"):
@@ -47,18 +50,11 @@ func _integrate_forces(state) -> void:
 #	var new_transform = Transform2D(new_rotation, position)
 	var velocity = state.get_linear_velocity()
 	var step = state.get_step()
-	var current_angular_velocity: float
 	
-	var balance: float = state.get_angular_velocity()
-	
-	var new_anim = anim
-	var new_siding_left = siding_left
-
 	# Get player input.
 	var move_left = Input.is_action_pressed("ui_left")
 	var move_right = Input.is_action_pressed("ui_right")
 	var jump = Input.is_action_pressed("jump")
-	var f_interact = Input.is_action_just_pressed("ui_end")
 	
 	# Deapply prev floor velocity.
 	velocity.x -= floor_h_velocity
@@ -117,20 +113,8 @@ func _integrate_forces(state) -> void:
 			jumping = true
 			stopping_jump = false
 
-		if (velocity.x > 180 or velocity.x < -180) and (move_left or move_right):
+		if abs(velocity.x) > 195 and (move_left or move_right):
 			trace.emitting = true
-		if jumping:
-			new_anim = "jumping"
-		elif abs(velocity.x) < .1:
-			if shoot_time < MAX_SHOOT_POSE_TIME:
-				new_anim = "idle_weapon"
-			else:
-				new_anim = "idle"
-		else:
-			if shoot_time < MAX_SHOOT_POSE_TIME:
-				new_anim = "run_weapon"
-			else:
-				new_anim = "run"
 	else:
 		# Process logic when the character is in the air.
 		if move_left and not move_right:
@@ -145,30 +129,7 @@ func _integrate_forces(state) -> void:
 			if xv < 0:
 				xv = 0
 			velocity.x = sign(velocity.x) * xv
-
-		if velocity.y < 0:
-			if shoot_time < MAX_SHOOT_POSE_TIME:
-				new_anim = "jumping_weapon"
-			else:
-				new_anim = "jumping"
-		else:
-			if shoot_time < MAX_SHOOT_POSE_TIME:
-				new_anim = "falling_weapon"
-			else:
-				new_anim = "falling"
 			
-	# Update siding.
-#	if new_siding_left != siding_left:
-#		if new_siding_left:
-#			play_flip(-1)
-#		else:
-#			play_flip(1)
-#		siding_left = new_siding_left
-
-	# Change animation.
-	if new_anim != anim:
-		anim = new_anim
-		
 	# Apply floor velocity.
 	if found_floor:
 		floor_h_velocity = state.get_contact_collider_velocity_at_position(floor_index).x
@@ -180,7 +141,7 @@ func _integrate_forces(state) -> void:
 	
 	if is_push:
 		#state.apply_impulse(Vector2(4600*5,-3000*5), Vector2(-230*5,0))
-		state.apply_central_force(push_pos * 25000)
+		state.apply_central_impulse(force_var)
 		is_push = false
 	
 #	state.transform = new_transform
@@ -191,13 +152,25 @@ func player_flip() -> void:
 	var cursor_pos = get_global_mouse_position() - global_position
 	var tween = create_tween()
 	tween.tween_property(visual, "scale:x", sign(cursor_pos.x), .15)
-	visual.rotation_degrees = -5 * sign(cursor_pos.x)
+	visual.rotation_degrees = 5 * -sign(cursor_pos.x)
 	
 func play_walk(velocity: Vector2) -> void:
 	if abs(velocity.x) > 100:
-		animation_player.play("walk")
+		walk_animation.play("walk")
 	else:
-		animation_player.pause()
+		walk_animation.pause()
 
-func push() -> void:
-	apply_central_impulse(force_var * 125)
+func push(force_var: Vector2) -> void:
+	stun.emit(true)
+	
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color(Color.WHITE), 0.25).from(Color(100, 100, 100, 1.0))
+	
+	is_push = true
+	self.force_var = force_var
+	
+	await tween.finished
+	stun.emit(false)
+
+func get_current_weapon() -> RigidBody2D:
+	return get_node("Weapon").get_child(0)

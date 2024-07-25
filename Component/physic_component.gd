@@ -1,34 +1,19 @@
 extends Node
 
-@export var greatest_force: int = 150
-@export var farthest_mar: int = 100
-
-func find_force(object_pos: Vector2, ray_cast: RayCast2D) -> Vector2:
-	var vec: Vector2 = Vector2.ZERO 
-	var point_pos = ray_cast.get_collision_point()
-	var x_val = 5000
-	var y_val = 100000
-	var divider: = Vector2(x_val, y_val)
-
-	vec = divider/(object_pos - point_pos)
-
-#postive side to clamp close x values
-	if vec.x >= greatest_force:
-		vec.x = greatest_force
-	elif vec.x <= -greatest_force:
-		vec.x = -greatest_force
-#negative side to clamp close x values
-	if vec.y >= greatest_force:
-		vec.y = greatest_force
-	elif vec.y <= -greatest_force:
-		vec.y = -greatest_force
-
-#This is to ensure that the farthest object does not experince the most amount of force
-	if vec.x < farthest_mar and vec.x > -farthest_mar:
-		vec = Vector2.ZERO
-#		print("xes")
-	if vec.y < farthest_mar and vec.y > -farthest_mar:
-		vec = Vector2.ZERO
-#		print("yes")
-
-	return vec 
+#@export var gravity: float = 440
+#@export var firing_force: float = 500
+#
+#@onready var projectile: CharacterBody2D = get_parent()
+#@onready var weapon: RigidBody2D = get_parent().get_parent()
+#
+#var vel: Vector2 = Vector2.ZERO
+#
+#func _physics_process(delta: float) -> void:
+	#vel = weapon.transform.x * firing_force
+	#vel.y += gravity * delta
+	#
+	#projectile.position += vel * delta
+	#projectile.rotation = vel.angle()
+	#projectile.velocity = vel
+	#
+	#projectile.move_and_slide()
