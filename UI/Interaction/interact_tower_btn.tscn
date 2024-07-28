@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://bmtmdbsugwwpp"]
+
+[ext_resource type="Script" path="res://UI/Interaction/interact_tower_btn.gd" id="1_edhhj"]
+[ext_resource type="Texture2D" uid="uid://cr58wmweew1tk" path="res://Sprites/UI/keyboard_e_outline.png" id="1_lh6hj"]
+[ext_resource type="Texture2D" uid="uid://mc8bl1dulgnt" path="res://Sprites/UI/keyboard_e.png" id="2_7flym"]
+[ext_resource type="Texture2D" uid="uid://bat4k7y155hjq" path="res://Sprites/UI/structure_watchtower.png" id="4_3rick"]
+[ext_resource type="Shader" path="res://Resources/Shaders/outline.gdshader" id="4_4g67b"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b6frc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_lh6hj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7flym")
+}],
+"loop": true,
+"name": &"pressed",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o6720"]
+shader = ExtResource("4_4g67b")
+shader_parameter/outline_color = Color(0.294118, 0.247059, 0.0627451, 1)
+shader_parameter/outline_thickness = 10.0
+
+[node name="InteractTowerBtn" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1820.0
+offset_bottom = -928.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_edhhj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+theme_override_constants/separation = -60
+
+[node name="Btn" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Btn" type="AnimatedSprite2D" parent="VBoxContainer/Btn"]
+modulate = Color(0.988235, 0.360784, 0.396078, 1)
+sprite_frames = SubResource("SpriteFrames_b6frc")
+animation = &"pressed"
+speed_scale = 0.0
+
+[node name="StructureWatchtower" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="StructureWatchtower" type="Sprite2D" parent="VBoxContainer/StructureWatchtower"]
+material = SubResource("ShaderMaterial_o6720")
+texture = ExtResource("4_3rick")

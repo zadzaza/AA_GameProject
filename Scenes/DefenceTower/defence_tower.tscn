@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://daxyvkoinhkve"]
+[gd_scene load_steps=15 format=3 uid="uid://daxyvkoinhkve"]
 
 [ext_resource type="Script" path="res://Scenes/DefenceTower/defence_tower.gd" id="1_b68ol"]
 [ext_resource type="Texture2D" uid="uid://dk1861uo1tf2w" path="res://Sprites/Tiles/tile_castle.png" id="1_do8j5"]
@@ -10,50 +10,87 @@
 size = Vector2(3.5, 50.625)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_li6np"]
-size = Vector2(92, 227)
+size = Vector2(92, 74)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h43tu"]
+size = Vector2(92, 119)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5qk4s"]
+size = Vector2(92, 42)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mlbca"]
 size = Vector2(81, 65)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gcjbb"]
-size = Vector2(251.5, 383)
+size = Vector2(251.5, 380)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_68yfb"]
+size = Vector2(252, 507)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5rtth"]
+size = Vector2(252, 127)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvhhg"]
+size = Vector2(252, 380)
 
 [node name="DefenceTower" type="Node2D"]
 script = ExtResource("1_b68ol")
 max_strength_value = 1000
 
-[node name="PlayerCollision" type="StaticBody2D" parent="."]
+[node name="HigherBlock" type="StaticBody2D" parent="."]
 collision_layer = 32
 collision_mask = 0
 
-[node name="TileCastle" type="Sprite2D" parent="PlayerCollision"]
+[node name="HigherBlock" type="Sprite2D" parent="HigherBlock"]
 position = Vector2(0, -359)
 texture = ExtResource("1_do8j5")
 
-[node name="TileStone" type="Sprite2D" parent="PlayerCollision"]
-position = Vector2(0, -240)
-texture = ExtResource("4_ogra3")
-
-[node name="TileArch" type="Sprite2D" parent="PlayerCollision"]
-position = Vector2(0, -120)
-texture = ExtResource("2_ctot8")
-
-[node name="TileArchColumns" type="Sprite2D" parent="PlayerCollision"]
-texture = ExtResource("3_06tme")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollision"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HigherBlock"]
 position = Vector2(-44, -395.125)
 shape = SubResource("RectangleShape2D_880jm")
 debug_color = Color(0.826065, 0.396889, 0.0256387, 0.42)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="PlayerCollision"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HigherBlock"]
 position = Vector2(45, -395)
 shape = SubResource("RectangleShape2D_880jm")
 debug_color = Color(0.826065, 0.396889, 0.0256387, 0.42)
 
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="PlayerCollision"]
-position = Vector2(1, -260.5)
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="HigherBlock"]
+z_index = 1
+position = Vector2(1, -337)
 shape = SubResource("RectangleShape2D_li6np")
+debug_color = Color(0.827451, 0.396078, 0.027451, 0.419608)
+
+[node name="MiddleBlock" type="StaticBody2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+
+[node name="MiddleBlock" type="Sprite2D" parent="MiddleBlock"]
+position = Vector2(0, -240)
+texture = ExtResource("4_ogra3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MiddleBlock"]
+z_index = 1
+position = Vector2(1, -240.5)
+shape = SubResource("RectangleShape2D_h43tu")
+debug_color = Color(0.827451, 0.396078, 0.027451, 0.419608)
+
+[node name="LowerBlock" type="StaticBody2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+
+[node name="LowerBlock" type="Sprite2D" parent="LowerBlock"]
+position = Vector2(0, -120)
+texture = ExtResource("2_ctot8")
+
+[node name="TileArchColumns" type="Sprite2D" parent="LowerBlock"]
+texture = ExtResource("3_06tme")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LowerBlock"]
+z_index = 1
+position = Vector2(1, -160)
+shape = SubResource("RectangleShape2D_5qk4s")
+disabled = true
 debug_color = Color(0.827451, 0.396078, 0.027451, 0.419608)
 
 [node name="WatchtowerArea" type="Area2D" parent="."]
@@ -63,28 +100,107 @@ collision_mask = 6
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WatchtowerArea"]
 position = Vector2(0.5, -407.5)
 shape = SubResource("RectangleShape2D_mlbca")
+debug_color = Color(0.607843, 0.615686, 0.607843, 0.341176)
 
 [node name="OffsetArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OffsetArea"]
-position = Vector2(0, -121.5)
+position = Vector2(0, -123)
 shape = SubResource("RectangleShape2D_gcjbb")
-debug_color = Color(0, 0.6, 0.7, 0)
+debug_color = Color(0.607843, 0.615686, 0.607843, 0.341176)
+
+[node name="ButtonVisibleArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonVisibleArea"]
+position = Vector2(0, -186.5)
+shape = SubResource("RectangleShape2D_68yfb")
+debug_color = Color(0.973495, 0, 0.434532, 0)
+
+[node name="SpawnToGroundArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnToGroundArea"]
+position = Vector2(0, -376.5)
+shape = SubResource("RectangleShape2D_5rtth")
+debug_color = Color(0.145098, 0.341176, 0.603922, 0.137255)
+
+[node name="SpawnToWatchtowerArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnToWatchtowerArea"]
+position = Vector2(0, -123)
+shape = SubResource("RectangleShape2D_cvhhg")
+debug_color = Color(0.145098, 0.341176, 0.603922, 0.137255)
+
+[node name="InteractTowerBtnSpawn" type="Marker2D" parent="."]
+position = Vector2(106, -90)
+
+[node name="AddCreepBtnSpawn" type="Marker2D" parent="."]
+position = Vector2(-106, -90)
 
 [node name="TowerStrength" type="ProgressBar" parent="."]
-offset_left = 87.0
-offset_top = -311.0
-offset_right = 110.0
-offset_bottom = -159.0
+custom_minimum_size = Vector2(23, 110)
+offset_left = 83.0
+offset_top = -293.0
+offset_right = 106.0
+offset_bottom = -183.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 8
 max_value = 1000.0
 step = 1.0
 value = 1000.0
 fill_mode = 3
 show_percentage = false
 
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -126.0
+offset_top = -313.0
+offset_right = 126.0
+offset_bottom = 70.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -126.0
+offset_top = -191.5
+offset_right = 126.0
+offset_bottom = 191.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+
+[node name="InteractTowerBtnSpawn" type="Control" parent="Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="AddCreepBtnSpawn" type="Control" parent="Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
 [connection signal="body_entered" from="WatchtowerArea" to="." method="_on_watchtower_area_body_entered"]
 [connection signal="body_exited" from="WatchtowerArea" to="." method="_on_watchtower_area_body_exited"]
 [connection signal="body_entered" from="OffsetArea" to="." method="_on_offset_area_body_entered"]
 [connection signal="body_exited" from="OffsetArea" to="." method="_on_offset_area_body_exited"]
+[connection signal="body_entered" from="ButtonVisibleArea" to="." method="_on_button_visible_area_body_entered"]
+[connection signal="body_exited" from="ButtonVisibleArea" to="." method="_on_button_visible_area_body_exited"]
+[connection signal="body_entered" from="SpawnToGroundArea" to="." method="_on_spawn_to_ground_area_body_entered"]
+[connection signal="body_exited" from="SpawnToGroundArea" to="." method="_on_spawn_to_ground_area_body_exited"]
+[connection signal="body_entered" from="SpawnToWatchtowerArea" to="." method="_on_spawn_to_watchtower_area_body_entered"]
+[connection signal="body_exited" from="SpawnToWatchtowerArea" to="." method="_on_spawn_to_watchtower_area_body_exited"]

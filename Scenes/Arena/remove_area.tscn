@@ -15,5 +15,6 @@ collision_mask = 527
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_kccai")
+debug_color = Color(0.470588, 0.576471, 0.372549, 0)
 
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

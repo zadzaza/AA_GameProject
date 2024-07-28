@@ -1,7 +1,8 @@
 extends RigidBody2D
 class_name Player
 
-signal stun(is_stun: bool)
+signal player_stun(is_stun: bool)
+signal player_interact(player: Player)
 
 @export var layer = 2
 
@@ -36,8 +37,14 @@ var force_var: Vector2
 @onready var pin_joint_2d: PinJoint2D = $PinJoint2D
 
 func _ready() -> void:
+	#Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	
 	pin_joint_2d.node_b = NodePath("../Weapon/" + get_current_weapon().name)
 	set_collision_layer_value(layer, true)
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact"):
+		self.player_interact.emit(self)
 
 func _integrate_forces(state) -> void:
 	#if Input.is_action_just_pressed("spawn"):
@@ -161,7 +168,7 @@ func play_walk(velocity: Vector2) -> void:
 		walk_animation.pause()
 
 func push(force_var: Vector2) -> void:
-	stun.emit(true)
+	player_stun.emit(true)
 	
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color(Color.WHITE), 0.25).from(Color(100, 100, 100, 1.0))
@@ -170,7 +177,7 @@ func push(force_var: Vector2) -> void:
 	self.force_var = force_var
 	
 	await tween.finished
-	stun.emit(false)
+	player_stun.emit(false)
 
 func get_current_weapon() -> RigidBody2D:
-	return get_node("Weapon").get_child(0)
+	return get_node("Weapon").get_child(0) # Получение текущего оружия. Больше одного оружия быть не может

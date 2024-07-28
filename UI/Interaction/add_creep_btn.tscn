@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://uqwya48dskw7"]
+
+[ext_resource type="Script" path="res://UI/Interaction/add_creep_btn.gd" id="1_i225u"]
+[ext_resource type="Texture2D" uid="uid://cpp2k7hgq0i5h" path="res://Sprites/UI/keyboard_q_outline.png" id="2_wvgcr"]
+[ext_resource type="Texture2D" uid="uid://p6oksoyj6o56" path="res://Sprites/UI/keyboard_q.png" id="3_d8yex"]
+[ext_resource type="Shader" path="res://Resources/Shaders/outline.gdshader" id="4_m72tq"]
+[ext_resource type="Texture2D" uid="uid://q6n13a6hyic2" path="res://Sprites/UI/token_add.png" id="5_tee1j"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b6frc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wvgcr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_d8yex")
+}],
+"loop": true,
+"name": &"pressed",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o6720"]
+shader = ExtResource("4_m72tq")
+shader_parameter/outline_color = Color(0.294118, 0.247059, 0.0627451, 1)
+shader_parameter/outline_thickness = 10.0
+
+[node name="AddCreepBtn" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1820.0
+offset_bottom = -928.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i225u")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+theme_override_constants/separation = -60
+
+[node name="Btn" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Btn" type="AnimatedSprite2D" parent="VBoxContainer/Btn"]
+modulate = Color(0.988235, 0.360784, 0.396078, 1)
+sprite_frames = SubResource("SpriteFrames_b6frc")
+speed_scale = 0.0
+
+[node name="AddCreep" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="AddCreep" type="Sprite2D" parent="VBoxContainer/AddCreep"]
+material = SubResource("ShaderMaterial_o6720")
+texture = ExtResource("5_tee1j")

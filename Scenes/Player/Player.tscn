@@ -84,7 +84,7 @@ gravity = Vector2(0, -1)
 scale_amount_min = 12.0
 scale_amount_max = 12.0
 scale_amount_curve = SubResource("Curve_qh1me")
-color = Color(0.865166, 0.875054, 0.882986, 1)
+color = Color(0.827451, 0.835294, 0.847059, 1)
 
 [node name="VisualPlayer" type="Node2D" parent="."]
 
@@ -104,6 +104,7 @@ position = Vector2(0, 23)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("1")
+debug_color = Color(0.407843, 0.466667, 1, 0)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 visible = false
