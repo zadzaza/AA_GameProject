@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cmuk4qa5qvni7"]
+[gd_scene load_steps=17 format=3 uid="uid://cmuk4qa5qvni7"]
 
 [ext_resource type="Script" path="res://Scenes/Arena/arena.gd" id="1_66tcb"]
 [ext_resource type="TileSet" uid="uid://d3h56ynjxvox3" path="res://Resources/Tilemap/ArenaTileSet.tres" id="2"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://bsbsx224gyg0t" path="res://Sprites/spritesheet_retina.png" id="6_55faa"]
 [ext_resource type="PackedScene" uid="uid://ddl7qrpfgah7s" path="res://Scenes/Arena/remove_area.tscn" id="7_n1o10"]
 [ext_resource type="PackedScene" uid="uid://daxyvkoinhkve" path="res://Scenes/DefenceTower/defence_tower.tscn" id="8_g4w6t"]
+[ext_resource type="Texture2D" uid="uid://driqvgq4r5udo" path="res://Sprites/Tiles/creep_square.png" id="9_qv5q8"]
+[ext_resource type="PackedScene" uid="uid://dsub8q6skdk57" path="res://Scenes/Creep/creep.tscn" id="10_7i411"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bdunm"]
 size = Vector2(1910, 246.75)
@@ -78,11 +80,11 @@ shape = SubResource("RectangleShape2D_g5njw")
 [node name="Entity" type="Node2D" parent="." groups=["entity_layer"]]
 
 [node name="Player" parent="Entity" instance=ExtResource("5")]
-position = Vector2(1410, 767)
+position = Vector2(820, 774)
 
 [node name="Player2" parent="Entity" instance=ExtResource("5")]
 z_index = -1
-position = Vector2(1291, 772)
+position = Vector2(1020, 775)
 layer = 3
 
 [node name="RigidBody2D" parent="Entity" instance=ExtResource("6")]
@@ -120,6 +122,9 @@ position = Vector2(1158, 468)
 position = Vector2(-838, 669)
 texture = ExtResource("6_55faa")
 
+[node name="Creep" parent="Entity" instance=ExtResource("10_7i411")]
+position = Vector2(667, 317)
+
 [node name="PlayerUI" type="Control" parent="." groups=["player_ui"]]
 z_index = -2
 layout_mode = 3
@@ -135,3 +140,10 @@ position = Vector2(542, 785)
 [node name="DefenceTower2" parent="." instance=ExtResource("8_g4w6t")]
 position = Vector2(1376, 785)
 scale = Vector2(-1, 1)
+
+[node name="HubPosition" type="Marker2D" parent="." groups=["hub"]]
+position = Vector2(1040, 1273)
+
+[node name="CreepSquare" type="Sprite2D" parent="."]
+position = Vector2(980, 456)
+texture = ExtResource("9_qv5q8")

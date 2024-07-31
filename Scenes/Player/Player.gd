@@ -1,8 +1,8 @@
 extends RigidBody2D
 class_name Player
 
-signal player_stun(is_stun: bool)
-signal player_interact(player: Player)
+signal stun(is_stun: bool)
+signal interact(player: Player)
 
 @export var layer = 2
 
@@ -27,9 +27,10 @@ var floor_h_velocity: float = 0.0
 var airborne_time: float = 1e20
 var shoot_time: float = 1e20
 
-var push_pos: Vector2
-var is_push: bool = false
 var force_var: Vector2
+
+var is_replace: bool = false
+var pos_to_replace: Vector2
 
 @onready var visual = $VisualPlayer as Node2D
 @onready var walk_animation = $WalkAnimation as AnimationPlayer
@@ -37,15 +38,22 @@ var force_var: Vector2
 @onready var pin_joint_2d: PinJoint2D = $PinJoint2D
 
 func _ready() -> void:
-	#Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	var current_weapon = get_current_weapon()
 	
-	pin_joint_2d.node_b = NodePath("../Weapon/" + get_current_weapon().name)
+	current_weapon.position = pin_joint_2d.position
+	pin_joint_2d.node_b = NodePath("../Weapon/" + current_weapon.name)
 	set_collision_layer_value(layer, true)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
-		self.player_interact.emit(self)
+		self.interact.emit(self)
 
+func _process(delta: float) -> void:
+	if is_replace:
+		set_linear_velocity(Vector2.ZERO)
+		self.global_position = pos_to_replace
+		is_replace = false
+		
 func _integrate_forces(state) -> void:
 	#if Input.is_action_just_pressed("spawn"):
 		#var rigid = load("res://RigidBody2D.tscn").instantiate()
@@ -80,7 +88,9 @@ func _integrate_forces(state) -> void:
 
 	# A good idea when implementing characters of all kinds,
 	# compensates for physics imprecision, as well as human reaction delay.
+	
 
+	
 	if found_floor:
 		airborne_time = 0.0
 	else:
@@ -146,11 +156,6 @@ func _integrate_forces(state) -> void:
 	velocity += state.get_total_gravity() * step
 	state.set_linear_velocity(velocity)
 	
-	if is_push:
-		#state.apply_impulse(Vector2(4600*5,-3000*5), Vector2(-230*5,0))
-		state.apply_central_impulse(force_var)
-		is_push = false
-	
 #	state.transform = new_transform
 	play_walk(velocity)
 	player_flip()
@@ -168,16 +173,20 @@ func play_walk(velocity: Vector2) -> void:
 		walk_animation.pause()
 
 func push(force_var: Vector2) -> void:
-	player_stun.emit(true)
+	stun.emit(true)
 	
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color(Color.WHITE), 0.25).from(Color(100, 100, 100, 1.0))
 	
-	is_push = true
-	self.force_var = force_var
+	apply_central_impulse(force_var)
 	
 	await tween.finished
-	player_stun.emit(false)
+	stun.emit(false)
 
 func get_current_weapon() -> RigidBody2D:
 	return get_node("Weapon").get_child(0) # Получение текущего оружия. Больше одного оружия быть не может
+
+func replace_to_pos(pos: Vector2):
+	self.reset_physics_interpolation()
+	is_replace = true
+	pos_to_replace = pos

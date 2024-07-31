@@ -8,7 +8,7 @@ var is_pull: bool = false
 var is_reload: bool = false
 
 var hand_start_pos = -16.321
-var hand_target_pos = -33.321
+var hand_target_pos = -143.321
 
 func _ready() -> void:
 	weapon_component.attack_pressed.connect(_on_attack_pressed)
@@ -16,22 +16,22 @@ func _ready() -> void:
 	weapon_component.attack_cooldown.connect(_on_attack_cooldown)
 
 func _physics_process(delta: float) -> void:
-	#character_hand_red.position.x = clamp(character_hand_red.position.x, hand_start_pos, hand_start_pos)
+	character_hand_red.position.x = clamp(character_hand_red.position.x, hand_start_pos, hand_start_pos)
 	if is_pull:
-		#character_hand_red.position.x += lerp(hand_start_pos, hand_target_pos, 0.1)
-		$AnimationPlayer.play("pull")
+		character_hand_red.position.x += lerp(hand_start_pos, hand_target_pos, 0.001)
+		#$AnimationPlayer.play("pull")
 
 func _on_attack_pressed():
 	print("attack_pressed")
-	$AnimationPlayer.play("pull")
-	await $AnimationPlayer.animation_changed
-	$AnimationPlayer.stop()
+	#$AnimationPlayer.play("pull")
+	#await $AnimationPlayer.animation_changed
+	#$AnimationPlayer.stop()
 	
 	is_pull = true
 
 func _on_attack_released():
 	print("attack_released")
-	$AnimationPlayer.stop()
+	#$AnimationPlayer.stop()
 	
 	is_pull = false
 	is_reload = true

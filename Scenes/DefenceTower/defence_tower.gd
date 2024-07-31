@@ -10,14 +10,12 @@ class_name DefenceTower
 @onready var interact_tower_btn_spawn: Marker2D = $InteractTowerBtnSpawn  # Позиция для кнопки взаимодействия с башней
 @onready var add_creep_btn_spawn: Marker2D = $AddCreepBtnSpawn  # Позиция для кнопки добавления врагов
 
+@onready var watchtower_spawn: Marker2D = $WatchtowerSpawn
+
 @onready var interact_tower_btn: Control = load("res://UI/Interaction/interact_tower_btn.tscn").instantiate()  # Кнопка взаимодействия с башней
 @onready var add_creep_btn: Control = load("res://UI/Interaction/add_creep_btn.tscn").instantiate()  # Кнопка добавления врагов
 
-var in_watchtower: bool = false
-
 var detected_bodys: Array  # Список обнаруженных тел для проверки на offset (не только игроков)
-var detected_players: Array  # Список обнаруженных игроков для проверки на event
-
 
 func _ready() -> void:
 	tower_strength.value = max_strength_value  # Установка начального значения прочности башни
@@ -36,10 +34,7 @@ func _process(delta: float) -> void:
 				body.z_index = 0
 			else:
 				body.z_index = 1
-
-func _input(event: InputEvent) -> void:
-	pass
-
+	
 func _on_offset_area_body_entered(body: Node2D) -> void:
 	detected_bodys.append(body)  # Добавление тела в список обнаруженных
 
@@ -49,49 +44,26 @@ func _on_offset_area_body_exited(body: Node2D) -> void:
 
 func _on_watchtower_area_body_entered(player: Player) -> void:
 	player.z_index = 0
-	player.get_current_weapon().z_index = 1 # Получение оружия, изменение z_index для отображения поверх башни
+	player.get_current_weapon().z_index = 1  # Получение оружия, изменение z_index для отображения поверх башни
 
 func _on_watchtower_area_body_exited(player: Player) -> void:
 	player.z_index = 1
 	player.get_current_weapon().z_index = 0
-
-func _on_spawn_to_ground_area_body_entered(player: Player) -> void:
-	in_watchtower = true # Игрок находится на башне
-
-func _on_spawn_to_ground_area_body_exited(player: Player) -> void:
-	in_watchtower = false
-
-func _on_spawn_to_watchtower_area_body_entered(player: Player) -> void:
-	in_watchtower = false # Игрок находится ниже наблюдательной башни
-
-func _on_spawn_to_watchtower_area_body_exited(player: Player) -> void:
-	in_watchtower = false
 	
 func _on_button_visible_area_body_entered(player: Player) -> void:
-	player.player_interact.connect(_on_player_interact)
+	player.interact.connect(_on_player_interact)  # Когда игрок нажимает E
 	
 	add_creep_btn.open()  # Открытие кнопки добавления врагов
 	interact_tower_btn.open()  # Открытие кнопки взаимодействия с башней
 	
-	if not detected_players.has(player):
-		detected_players.append(player)
-
 func _on_button_visible_area_body_exited(player: Player) -> void:
-	player.player_interact.disconnect(_on_player_interact)
+	player.interact.disconnect(_on_player_interact)
 	
 	add_creep_btn.close()  # Закрытие кнопки добавления врагов
 	interact_tower_btn.close()  # Закрытие кнопки взаимодействия с башней
-	
-	if detected_players.has(player):
-		detected_players.erase(player)
 
 func _on_player_interact(player: Player):
-	if player in detected_players:
-		print("OK")
-
-func add_player(player: Player):
-	if not detected_players.has(player):
-		detected_players.append(player)
+	player.replace_to_pos(watchtower_spawn.global_position)
 
 func apply_damage(damage_value: int, block_name: String, offset: float):
 	tower_strength.value -= damage_value  # Уменьшение прочности башни

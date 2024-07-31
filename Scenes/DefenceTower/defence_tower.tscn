@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://daxyvkoinhkve"]
+[gd_scene load_steps=13 format=3 uid="uid://daxyvkoinhkve"]
 
 [ext_resource type="Script" path="res://Scenes/DefenceTower/defence_tower.gd" id="1_b68ol"]
 [ext_resource type="Texture2D" uid="uid://dk1861uo1tf2w" path="res://Sprites/Tiles/tile_castle.png" id="1_do8j5"]
@@ -25,12 +25,6 @@ size = Vector2(81, 65)
 size = Vector2(251.5, 380)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_68yfb"]
-size = Vector2(252, 507)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5rtth"]
-size = Vector2(252, 127)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvhhg"]
 size = Vector2(252, 380)
 
 [node name="DefenceTower" type="Node2D"]
@@ -116,33 +110,18 @@ collision_layer = 0
 collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonVisibleArea"]
-position = Vector2(0, -186.5)
+position = Vector2(0, -123)
 shape = SubResource("RectangleShape2D_68yfb")
 debug_color = Color(0.973495, 0, 0.434532, 0)
-
-[node name="SpawnToGroundArea" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 6
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnToGroundArea"]
-position = Vector2(0, -376.5)
-shape = SubResource("RectangleShape2D_5rtth")
-debug_color = Color(0.145098, 0.341176, 0.603922, 0.137255)
-
-[node name="SpawnToWatchtowerArea" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 6
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnToWatchtowerArea"]
-position = Vector2(0, -123)
-shape = SubResource("RectangleShape2D_cvhhg")
-debug_color = Color(0.145098, 0.341176, 0.603922, 0.137255)
 
 [node name="InteractTowerBtnSpawn" type="Marker2D" parent="."]
 position = Vector2(106, -90)
 
 [node name="AddCreepBtnSpawn" type="Marker2D" parent="."]
 position = Vector2(-106, -90)
+
+[node name="WatchtowerSpawn" type="Marker2D" parent="."]
+position = Vector2(0, -503)
 
 [node name="TowerStrength" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(23, 110)
@@ -159,48 +138,9 @@ value = 1000.0
 fill_mode = 3
 show_percentage = false
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -126.0
-offset_top = -313.0
-offset_right = 126.0
-offset_bottom = 70.0
-
-[node name="MarginContainer" type="MarginContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -126.0
-offset_top = -191.5
-offset_right = 126.0
-offset_bottom = 191.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-
-[node name="InteractTowerBtnSpawn" type="Control" parent="Control/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-
-[node name="AddCreepBtnSpawn" type="Control" parent="Control/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-
 [connection signal="body_entered" from="WatchtowerArea" to="." method="_on_watchtower_area_body_entered"]
 [connection signal="body_exited" from="WatchtowerArea" to="." method="_on_watchtower_area_body_exited"]
 [connection signal="body_entered" from="OffsetArea" to="." method="_on_offset_area_body_entered"]
 [connection signal="body_exited" from="OffsetArea" to="." method="_on_offset_area_body_exited"]
 [connection signal="body_entered" from="ButtonVisibleArea" to="." method="_on_button_visible_area_body_entered"]
 [connection signal="body_exited" from="ButtonVisibleArea" to="." method="_on_button_visible_area_body_exited"]
-[connection signal="body_entered" from="SpawnToGroundArea" to="." method="_on_spawn_to_ground_area_body_entered"]
-[connection signal="body_exited" from="SpawnToGroundArea" to="." method="_on_spawn_to_ground_area_body_exited"]
-[connection signal="body_entered" from="SpawnToWatchtowerArea" to="." method="_on_spawn_to_watchtower_area_body_entered"]
-[connection signal="body_exited" from="SpawnToWatchtowerArea" to="." method="_on_spawn_to_watchtower_area_body_exited"]

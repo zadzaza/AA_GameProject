@@ -100,7 +100,6 @@ texture = ExtResource("2")
 [node name="Weapon" type="Node2D" parent="."]
 
 [node name="Gun" parent="Weapon" instance=ExtResource("4_5714l")]
-position = Vector2(0, 23)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("1")

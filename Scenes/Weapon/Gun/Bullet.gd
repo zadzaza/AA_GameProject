@@ -12,6 +12,8 @@ var mouse_vec: Vector2
 const SPEED = 80000  # Скорость движения
 
 func _ready() -> void:
+	self.reset_physics_interpolation()
+	
 	var player_layer = get_parent().player.get_collision_layer()
 
 	mouse_vec = global_position.direction_to(get_global_mouse_position())

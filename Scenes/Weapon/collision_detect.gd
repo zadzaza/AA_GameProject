@@ -12,6 +12,8 @@ func _process(delta: float) -> void:
 		
 		if object is Player:
 			object.push(direction_to * strength)  # Применение толчка к объекту типа Player
+		if object is Creep:
+			object.push_up()  # Применение верхнего толчка к объекту типа Creep
 		if object.name in ["HigherBlock", "MiddleBlock", "LowerBlock"]:
 			object.get_parent().apply_damage(damage_value, object.name, sign(direction_to.x))  # Применение урона к объекту блока
 			

@@ -13,10 +13,13 @@ var can_shoot: bool = true  # Флаг возможности стрельбы
 var is_stun: bool = false  # Флаг оглушения
 var firing_force: float = 500.0  # Сила выстрела
 
-func _ready() -> void:
-	player.player_stun.connect(_on_player_stun)  # Подключение к сигналу оглушения
+var is_replace: bool = false
+var pos_to_replace: Vector2
 
-func _physics_process(delta: float) -> void:
+func _ready() -> void:
+	player.stun.connect(_on_player_stun)  # Подключение к сигналу оглушения
+
+func _process(delta: float) -> void:
 	if can_shoot and not is_stun:
 		if Input.is_action_just_pressed("attack"):
 			var mouse_vec = global_position.direction_to(get_global_mouse_position())
@@ -31,7 +34,7 @@ func _physics_process(delta: float) -> void:
 			explosion.gravity.y = mouse_vec.y
 			explosion.emitting = true
 
-			# gun_visual.rotation_degrees += lerp(0.0, rotation_degrees - 360 * gun_visual.scale.y, 0.1)
+			#gun_visual.rotation_degrees += lerp(0.0, rotation_degrees - 360 * gun_visual.scale.y, 0.1)
 			position += lerp(Vector2.ZERO, mouse_vec * -Vector2(gun_visual.scale.x * 220, gun_visual.scale.x * 220), 0.1)
 			position.x = clamp(position.x, -40, 40)
 			position.y = clamp(position.y, -40, 40)
