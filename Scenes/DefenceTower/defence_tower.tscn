@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://daxyvkoinhkve"]
+[gd_scene load_steps=14 format=3 uid="uid://daxyvkoinhkve"]
 
 [ext_resource type="Script" path="res://Scenes/DefenceTower/defence_tower.gd" id="1_b68ol"]
 [ext_resource type="Texture2D" uid="uid://dk1861uo1tf2w" path="res://Sprites/Tiles/tile_castle.png" id="1_do8j5"]
@@ -26,6 +26,9 @@ size = Vector2(251.5, 380)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_68yfb"]
 size = Vector2(252, 380)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yb0e2"]
+size = Vector2(5.875, 202)
 
 [node name="DefenceTower" type="Node2D"]
 script = ExtResource("1_b68ol")
@@ -98,7 +101,7 @@ debug_color = Color(0.607843, 0.615686, 0.607843, 0.341176)
 
 [node name="OffsetArea" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 6
+collision_mask = 198
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OffsetArea"]
 position = Vector2(0, -123)
@@ -114,6 +117,14 @@ position = Vector2(0, -123)
 shape = SubResource("RectangleShape2D_68yfb")
 debug_color = Color(0.973495, 0, 0.434532, 0)
 
+[node name="CreepArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 192
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CreepArea"]
+position = Vector2(0.0625, -37)
+shape = SubResource("RectangleShape2D_yb0e2")
+
 [node name="InteractTowerBtnSpawn" type="Marker2D" parent="."]
 position = Vector2(106, -90)
 
@@ -123,7 +134,11 @@ position = Vector2(-106, -90)
 [node name="WatchtowerSpawn" type="Marker2D" parent="."]
 position = Vector2(0, -503)
 
+[node name="CreepSpawn" type="Marker2D" parent="."]
+position = Vector2(-1, -146)
+
 [node name="TowerStrength" type="ProgressBar" parent="."]
+z_index = -3
 custom_minimum_size = Vector2(23, 110)
 offset_left = 83.0
 offset_top = -293.0
@@ -140,7 +155,6 @@ show_percentage = false
 
 [connection signal="body_entered" from="WatchtowerArea" to="." method="_on_watchtower_area_body_entered"]
 [connection signal="body_exited" from="WatchtowerArea" to="." method="_on_watchtower_area_body_exited"]
-[connection signal="body_entered" from="OffsetArea" to="." method="_on_offset_area_body_entered"]
 [connection signal="body_exited" from="OffsetArea" to="." method="_on_offset_area_body_exited"]
 [connection signal="body_entered" from="ButtonVisibleArea" to="." method="_on_button_visible_area_body_entered"]
 [connection signal="body_exited" from="ButtonVisibleArea" to="." method="_on_button_visible_area_body_exited"]

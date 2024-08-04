@@ -10,6 +10,8 @@ shader_parameter/color = Color(0.988235, 0.360784, 0.396078, 1)
 
 [node name="Trajectory" type="Line2D"]
 modulate = Color(100, 100, 100, 1)
+z_index = 2
+z_as_relative = false
 texture_repeat = 2
 material = SubResource("ShaderMaterial_a7jet")
 width = 30.0

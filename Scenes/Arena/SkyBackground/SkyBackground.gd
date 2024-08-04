@@ -1,7 +1,7 @@
 extends Node2D
 
-@onready var cloud = load("res://Scenes/Arena/SkyBackground/Cloud.tscn")
-@onready var timer = $Timer as Timer
+@onready var cloud: PackedScene = load("res://Scenes/Arena/SkyBackground/Cloud.tscn")
+@onready var timer: Timer = $Timer as Timer
 var time_interval: float
 
 func _on_Timer_timeout():

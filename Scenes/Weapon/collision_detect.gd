@@ -4,7 +4,7 @@ extends RayCast2D
 @export var damage_value: int  # Значение урона, наносимого объектам
 @onready var entity_layer: Node2D = get_tree().get_first_node_in_group("entity_layer")  # Слой для добавления эффектов
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if self.is_colliding():  # Проверка на столкновение
 		var object = self.get_collider()  # Получение объекта, с которым произошло столкновение
 		var object_pos = object.global_position  # Позиция объекта

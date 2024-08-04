@@ -22,8 +22,10 @@ func _ready() -> void:
 
 	if player_layer == 2:  # Значение 2 - team1
 		collision_detect.set_collision_mask_value(3, true)
+		collision_detect.set_collision_mask_value(8, true)
 	elif player_layer == 4:  # Значение 4 - team2
 		collision_detect.set_collision_mask_value(2, true)
+		collision_detect.set_collision_mask_value(7, true)
 
 func _physics_process(delta: float) -> void:
 	vel.y += gravity * delta

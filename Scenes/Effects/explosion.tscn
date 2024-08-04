@@ -24,3 +24,5 @@ scale_amount_max = 16.0
 scale_amount_curve = SubResource("Curve_f52s6")
 color = Color(0.826176, 0.836206, 0.84623, 1)
 script = ExtResource("1_14ge3")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

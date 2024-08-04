@@ -1,6 +1,7 @@
 extends CPUParticles2D
 
 func _ready() -> void:
-	emitting = true
-	if not emitting:
-		queue_free()
+	restart()
+
+func _on_finished() -> void:
+	queue_free()

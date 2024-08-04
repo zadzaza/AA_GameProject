@@ -1,118 +1,108 @@
-[gd_scene load_steps=12 format=3 uid="uid://dsub8q6skdk57"]
+[gd_scene load_steps=13 format=3 uid="uid://dsub8q6skdk57"]
 
 [ext_resource type="Script" path="res://Scenes/Creep/creep.gd" id="1_27qxg"]
 [ext_resource type="Texture2D" uid="uid://driqvgq4r5udo" path="res://Sprites/Tiles/creep_square.png" id="1_l2ivx"]
 [ext_resource type="Texture2D" uid="uid://crii0ivukm2on" path="res://Sprites/Tiles/item_hat.png" id="2_6mq8c"]
-[ext_resource type="Script" path="res://Scenes/Creep/state_machine.gd" id="2_nn5f2"]
+[ext_resource type="Script" path="res://Scenes/Creep/StateMachine/state_machine.gd" id="2_nn5f2"]
+[ext_resource type="Script" path="res://Scenes/Creep/StateMachine/creep_move.gd" id="3_7fbv6"]
 [ext_resource type="Texture2D" uid="uid://bh01r37u86jfg" path="res://Sprites/CreepEmotions/face_f.png" id="3_867b2"]
-[ext_resource type="Texture2D" uid="uid://bal1j328dlcwg" path="res://Sprites/CreepEmotions/face_h.png" id="5_et0fm"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_foux5"]
-bounce = 0.25
+[ext_resource type="Script" path="res://Scenes/Creep/StateMachine/creep_target_attack.gd" id="4_vuibi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l7asa"]
 size = Vector2(78, 80)
 
-[sub_resource type="Animation" id="Animation_pb3g1"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rc04a"]
+size = Vector2(114, 203)
+
+[sub_resource type="Animation" id="Animation_8pds6"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("FaceF:modulate")
+tracks/0/path = NodePath("Visual:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("FaceH:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [0.0]
 }
 
-[sub_resource type="Animation" id="Animation_7iusx"]
-resource_name = "new_animation"
-length = 0.15
+[sub_resource type="Animation" id="Animation_6emhe"]
+resource_name = "walk"
+length = 2.0
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("FaceF:modulate")
+tracks/0/path = NodePath("Visual:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("FaceH:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.15),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [0.0523599, 0.0, -0.0523599]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rbvey"]
 _data = {
-"RESET": SubResource("Animation_pb3g1"),
-"new_animation": SubResource("Animation_7iusx")
+"RESET": SubResource("Animation_8pds6"),
+"walk": SubResource("Animation_6emhe")
 }
 
-[node name="Creep" type="RigidBody2D"]
-collision_layer = 2
-collision_mask = 33
-physics_material_override = SubResource("PhysicsMaterial_foux5")
-lock_rotation = true
+[node name="Creep" type="CharacterBody2D"]
+collision_layer = 0
 script = ExtResource("1_27qxg")
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_nn5f2")
+initial_state = NodePath("Move")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -30.0
-offset_top = -31.0
-offset_right = 31.0
-offset_bottom = 31.0
-color = Color(0.988235, 0.360784, 0.396078, 1)
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("creep", "creep_check_area")]
+script = ExtResource("3_7fbv6")
+creep = NodePath("../..")
+creep_check_area = NodePath("../../CreepCheckArea")
 
-[node name="CreepSquare" type="Sprite2D" parent="."]
-texture = ExtResource("1_l2ivx")
-
-[node name="ItemHat" type="Sprite2D" parent="."]
-position = Vector2(-1, -53)
-texture = ExtResource("2_6mq8c")
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("4_vuibi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_l7asa")
 debug_color = Color(0.168627, 0.627451, 0.439216, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_rbvey")
-}
+[node name="Visual" type="Node2D" parent="."]
 
-[node name="FaceF" type="Sprite2D" parent="."]
+[node name="ColorRect" type="ColorRect" parent="Visual"]
+offset_left = -30.0
+offset_top = -31.0
+offset_right = 31.0
+offset_bottom = 31.0
+color = Color(0.988235, 0.360784, 0.396078, 1)
+
+[node name="CreepSquare" type="Sprite2D" parent="Visual"]
+texture = ExtResource("1_l2ivx")
+
+[node name="FaceF" type="Sprite2D" parent="Visual"]
 position = Vector2(2, 5)
 texture = ExtResource("3_867b2")
 
-[node name="FaceH" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0)
-position = Vector2(2, 5)
-texture = ExtResource("5_et0fm")
+[node name="ItemHat" type="Sprite2D" parent="Visual"]
+position = Vector2(-1, -53)
+texture = ExtResource("2_6mq8c")
+
+[node name="CreepCheckArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CreepCheckArea"]
+position = Vector2(101, -62.5)
+shape = SubResource("RectangleShape2D_rc04a")
+
+[node name="WalkAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rbvey")
+}
+speed_scale = 4.0

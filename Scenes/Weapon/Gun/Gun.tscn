@@ -30,7 +30,7 @@ script = ExtResource("1")
 position = Vector2(38, 0)
 
 [node name="BulletSpawn" type="Marker2D" parent="GunVisual/Sprites"]
-position = Vector2(63, -1)
+position = Vector2(73, -1)
 
 [node name="Explosion" type="CPUParticles2D" parent="GunVisual/Sprites"]
 position = Vector2(63, -1)
@@ -42,7 +42,6 @@ speed_scale = 1.7
 explosiveness = 1.0
 randomness = 0.4
 lifetime_randomness = 0.35
-local_coords = true
 emission_shape = 3
 emission_rect_extents = Vector2(1, 10)
 gravity = Vector2(0, 0)

@@ -121,4 +121,4 @@ softness = 11.0
 libraries = {
 "": SubResource("AnimationLibrary_o5733")
 }
-speed_scale = 3.0
+speed_scale = 4.0

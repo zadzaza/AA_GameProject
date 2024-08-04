@@ -3,14 +3,15 @@ class_name Player
 
 signal stun(is_stun: bool)
 signal interact(player: Player)
+signal creep_spawn(player: Player)
 
 @export var layer = 2
 
-const WALK_ACCEL = 1000.0
-const WALK_DEACCEL = 1000.0
-const WALK_MAX_VELOCITY = 200.0
-const AIR_ACCEL = 325.0
-const AIR_DEACCEL = 325.0
+const WALK_ACCEL = 1350.0 
+const WALK_DEACCEL = 1350.0
+const WALK_MAX_VELOCITY = 230.0
+const AIR_ACCEL = 350.0
+const AIR_DEACCEL = 350.0
 const JUMP_VELOCITY = 455.0
 const STOP_JUMP_FORCE = 525.0
 const MAX_SHOOT_POSE_TIME = .3
@@ -47,6 +48,8 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
 		self.interact.emit(self)
+	if event.is_action_pressed("creep_spawn"):
+		self.creep_spawn.emit(self)
 
 func _process(delta: float) -> void:
 	if is_replace:
@@ -88,8 +91,6 @@ func _integrate_forces(state) -> void:
 
 	# A good idea when implementing characters of all kinds,
 	# compensates for physics imprecision, as well as human reaction delay.
-	
-
 	
 	if found_floor:
 		airborne_time = 0.0

@@ -19,10 +19,10 @@ var pos_to_replace: Vector2
 func _ready() -> void:
 	player.stun.connect(_on_player_stun)  # Подключение к сигналу оглушения
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if can_shoot and not is_stun:
 		if Input.is_action_just_pressed("attack"):
-			var mouse_vec = global_position.direction_to(get_global_mouse_position())
+			var mouse_vec = self.global_position.direction_to(get_global_mouse_position())
 			var bullet = load("res://Scenes/Weapon/Gun/Bullet.tscn").instantiate()
 
 			add_child(bullet)
@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 
 			explosion.gravity.x = mouse_vec.x
 			explosion.gravity.y = mouse_vec.y
-			explosion.emitting = true
+			explosion.restart()
 
 			#gun_visual.rotation_degrees += lerp(0.0, rotation_degrees - 360 * gun_visual.scale.y, 0.1)
 			position += lerp(Vector2.ZERO, mouse_vec * -Vector2(gun_visual.scale.x * 220, gun_visual.scale.x * 220), 0.1)
@@ -40,6 +40,7 @@ func _process(delta: float) -> void:
 			position.y = clamp(position.y, -40, 40)
 
 			can_shoot = false
+			
 			timer.start()
 
 		if Input.is_action_pressed("aiming"):

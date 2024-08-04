@@ -13,7 +13,6 @@ config_version=5
 config/name="AA_GameProject"
 run/main_scene="res://Scenes/Arena/Arena.tscn"
 config/features=PackedStringArray("4.3")
-run/max_fps=75
 config/icon="res://icon.png"
 
 [display]
@@ -135,9 +134,10 @@ creep_spawn={
 2d_physics/layer_1="ground"
 2d_physics/layer_2="team1"
 2d_physics/layer_3="team2"
-2d_physics/layer_4="creeps"
 2d_physics/layer_5="projectiles"
 2d_physics/layer_6="tower"
+2d_physics/layer_7="creep_team1"
+2d_physics/layer_8="creep_team2"
 
 [physics]
 
