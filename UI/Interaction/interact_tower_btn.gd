@@ -15,9 +15,6 @@ func _input(event: InputEvent) -> void:
 func open() -> void:
 	var tween = create_tween()
 	
-	#tween.tween_property(
-		#self, 'scale', Vector2.ZERO, 0
-	#)
 	tween.tween_property(
 		self, 'scale', Vector2.ONE, .3
 	).set_ease(
@@ -29,9 +26,6 @@ func open() -> void:
 func close():
 	var tween = create_tween()
 	
-	#tween.tween_property(
-		#self, 'scale', Vector2.ONE, 0
-	#)
 	tween.tween_property(
 		self, 'scale', Vector2.ZERO, .3
 	).set_ease(

@@ -3,6 +3,7 @@ res://Scenes/Arena/Arena.tscn
 res://Resources/Tilemap/ArenaTileSet.tres
 res://Resources/Shaders/scrolling_texture.gdshader
 res://Resources/Shaders/outline.gdshader
+res://Scenes/DefenceTower/defence_tower.gd
 res://Scenes/DefenceTower/defence_tower.tscn
 res://Scenes/Weapon/Gun/Bullet.tscn
 res://UI/Interaction/interact_tower_btn.tscn
@@ -10,5 +11,11 @@ res://Scenes/Player/Player.tscn
 res://Scenes/Creep/creep.tscn
 res://Scenes/Weapon/Gun/Gun.tscn
 res://Scenes/Weapon/trajectory.tscn
+res://Scenes/Creep/StateMachine/attack.gd
 res://Scenes/Creep/creep.gd
-res://Scenes/Creep/StateMachine/creep_move.gd
+res://Scenes/Creep/StateMachine/wait.gd
+res://Scenes/Weapon/collision_detect.gd
+res://Scenes/Arena/remove_area.tscn
+res://Scenes/Arena/SkyBackground/SkyBackground.tscn
+res://Scenes/Creep/StateMachine/move.gd
+res://Scenes/Creep/StateMachine/state_machine.gd

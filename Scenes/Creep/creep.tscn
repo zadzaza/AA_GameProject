@@ -1,18 +1,22 @@
-[gd_scene load_steps=13 format=3 uid="uid://dsub8q6skdk57"]
+[gd_scene load_steps=15 format=3 uid="uid://dsub8q6skdk57"]
 
 [ext_resource type="Script" path="res://Scenes/Creep/creep.gd" id="1_27qxg"]
 [ext_resource type="Texture2D" uid="uid://driqvgq4r5udo" path="res://Sprites/Tiles/creep_square.png" id="1_l2ivx"]
 [ext_resource type="Texture2D" uid="uid://crii0ivukm2on" path="res://Sprites/Tiles/item_hat.png" id="2_6mq8c"]
 [ext_resource type="Script" path="res://Scenes/Creep/StateMachine/state_machine.gd" id="2_nn5f2"]
-[ext_resource type="Script" path="res://Scenes/Creep/StateMachine/creep_move.gd" id="3_7fbv6"]
+[ext_resource type="Script" path="res://Scenes/Creep/StateMachine/move.gd" id="3_7fbv6"]
+[ext_resource type="Script" path="res://Scenes/Creep/StateMachine/wait.gd" id="3_7hida"]
 [ext_resource type="Texture2D" uid="uid://bh01r37u86jfg" path="res://Sprites/CreepEmotions/face_f.png" id="3_867b2"]
-[ext_resource type="Script" path="res://Scenes/Creep/StateMachine/creep_target_attack.gd" id="4_vuibi"]
+[ext_resource type="Script" path="res://Scenes/Creep/StateMachine/attack.gd" id="4_vuibi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l7asa"]
 size = Vector2(78, 80)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_81ijd"]
+size = Vector2(76, 388)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rc04a"]
-size = Vector2(114, 203)
+size = Vector2(76, 388)
 
 [sub_resource type="Animation" id="Animation_8pds6"]
 length = 0.001
@@ -54,24 +58,29 @@ _data = {
 
 [node name="Creep" type="CharacterBody2D"]
 collision_layer = 0
+collision_mask = 193
 script = ExtResource("1_27qxg")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_nn5f2")
 initial_state = NodePath("Move")
 
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("creep", "creep_check_area")]
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("creep", "creep_check_area", "union_creep_check_area")]
 script = ExtResource("3_7fbv6")
 creep = NodePath("../..")
 creep_check_area = NodePath("../../CreepCheckArea")
+union_creep_check_area = NodePath("../../UnionCreepCheckArea")
 
-[node name="Attack" type="Node" parent="StateMachine"]
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("creep", "creep_check_area")]
 script = ExtResource("4_vuibi")
+creep = NodePath("../..")
+creep_check_area = NodePath("../../CreepCheckArea")
+basic_attack_cooldown = 0.7
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_l7asa")
-debug_color = Color(0.168627, 0.627451, 0.439216, 0)
+[node name="Wait" type="Node" parent="StateMachine" node_paths=PackedStringArray("creep", "union_creep_check_area")]
+script = ExtResource("3_7hida")
+creep = NodePath("../..")
+union_creep_check_area = NodePath("../../UnionCreepCheckArea")
 
 [node name="Visual" type="Node2D" parent="."]
 
@@ -93,12 +102,26 @@ texture = ExtResource("3_867b2")
 position = Vector2(-1, -53)
 texture = ExtResource("2_6mq8c")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_l7asa")
+debug_color = Color(0.168627, 0.627451, 0.439216, 1)
+
+[node name="UnionCreepCheckArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UnionCreepCheckArea"]
+position = Vector2(78, -55)
+shape = SubResource("RectangleShape2D_81ijd")
+debug_color = Color(0.565286, 0.505538, 0.639709, 0.42)
+
 [node name="CreepCheckArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CreepCheckArea"]
-position = Vector2(101, -62.5)
+position = Vector2(78, -55)
 shape = SubResource("RectangleShape2D_rc04a")
 
 [node name="WalkAnimation" type="AnimationPlayer" parent="."]
@@ -106,3 +129,13 @@ libraries = {
 "": SubResource("AnimationLibrary_rbvey")
 }
 speed_scale = 4.0
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="UnionCreepCheckArea" to="." method="_on_union_creep_check_area_body_entered"]
+[connection signal="body_entered" from="UnionCreepCheckArea" to="StateMachine/Move" method="_on_union_creep_check_area_body_entered"]
+[connection signal="body_exited" from="UnionCreepCheckArea" to="." method="_on_union_creep_check_area_body_exited"]
+[connection signal="body_exited" from="UnionCreepCheckArea" to="StateMachine/Wait" method="_on_union_creep_check_area_body_exited"]
+[connection signal="body_entered" from="CreepCheckArea" to="." method="_on_creep_check_area_body_entered"]
+[connection signal="body_entered" from="CreepCheckArea" to="StateMachine/Move" method="_on_creep_check_area_body_entered"]
+[connection signal="body_exited" from="CreepCheckArea" to="." method="_on_creep_check_area_body_exited"]

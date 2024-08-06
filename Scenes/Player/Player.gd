@@ -7,8 +7,8 @@ signal creep_spawn(player: Player)
 
 @export var layer = 2
 
-const WALK_ACCEL = 1350.0 
-const WALK_DEACCEL = 1350.0
+const WALK_ACCEL = 1220.0 
+const WALK_DEACCEL = 1220.0
 const WALK_MAX_VELOCITY = 230.0
 const AIR_ACCEL = 350.0
 const AIR_DEACCEL = 350.0

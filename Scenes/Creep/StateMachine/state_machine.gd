@@ -14,7 +14,7 @@ func _ready() -> void:
 	if initial_state:
 		initial_state.enter()
 		current_state = initial_state
-
+	
 func _process(delta: float) -> void:
 	if current_state:
 		current_state.update(delta)
@@ -24,6 +24,7 @@ func _physics_process(delta: float) -> void:
 		current_state.physics_update(delta)
 
 func _on_child_transition(state, new_state_name):
+	print("{EQ}")
 	if state != current_state:
 		return
 		

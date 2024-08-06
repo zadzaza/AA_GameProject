@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cmuk4qa5qvni7"]
+[gd_scene load_steps=12 format=3 uid="uid://cmuk4qa5qvni7"]
 
 [ext_resource type="Script" path="res://Scenes/Arena/arena.gd" id="1_66tcb"]
 [ext_resource type="TileSet" uid="uid://d3h56ynjxvox3" path="res://Resources/Tilemap/ArenaTileSet.tres" id="2"]
@@ -15,18 +15,6 @@ size = Vector2(1910, 246.75)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6jgo0"]
 size = Vector2(122, 119)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fludq"]
-size = Vector2(740, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pp11j"]
-size = Vector2(20, 247)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eeogi"]
-size = Vector2(780, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g5njw"]
-size = Vector2(20, 247)
 
 [node name="Arena" type="Node2D"]
 script = ExtResource("1_66tcb")
@@ -60,30 +48,7 @@ shape = SubResource("RectangleShape2D_6jgo0")
 position = Vector2(1836.5, -69.5)
 shape = SubResource("RectangleShape2D_6jgo0")
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="TileMap/StaticBody2D"]
-position = Vector2(1024, 273)
-shape = SubResource("RectangleShape2D_fludq")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="TileMap/StaticBody2D"]
-position = Vector2(644, 386.5)
-shape = SubResource("RectangleShape2D_pp11j")
-
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="TileMap/StaticBody2D"]
-position = Vector2(1024, 520)
-shape = SubResource("RectangleShape2D_eeogi")
-
-[node name="CollisionShape2D7" type="CollisionShape2D" parent="TileMap/StaticBody2D"]
-position = Vector2(1404, 386.5)
-shape = SubResource("RectangleShape2D_g5njw")
-
 [node name="Entity" type="Node2D" parent="." groups=["entity_layer"]]
-
-[node name="Player" parent="Entity" instance=ExtResource("5")]
-position = Vector2(1371, 748)
-layer = 3
-
-[node name="Player2" parent="Entity" instance=ExtResource("5")]
-position = Vector2(440, 718)
 
 [node name="RigidBody2D" parent="Entity" instance=ExtResource("6")]
 position = Vector2(1160, 642)
@@ -120,6 +85,17 @@ position = Vector2(1158, 468)
 position = Vector2(-838, 669)
 texture = ExtResource("6_55faa")
 
+[node name="CreepLayer" type="Node2D" parent="Entity" groups=["creep_layer"]]
+
+[node name="PlayerLayer" type="Node2D" parent="Entity"]
+
+[node name="Player" parent="Entity/PlayerLayer" instance=ExtResource("5")]
+position = Vector2(1371, 748)
+layer = 3
+
+[node name="Player2" parent="Entity/PlayerLayer" instance=ExtResource("5")]
+position = Vector2(440, 718)
+
 [node name="PlayerUI" type="Control" parent="." groups=["player_ui"]]
 z_index = -2
 layout_mode = 3
@@ -135,9 +111,6 @@ position = Vector2(542, 785)
 [node name="DefenceTower2" parent="." instance=ExtResource("8_g4w6t")]
 position = Vector2(1376, 785)
 current_tower_team = 1
-
-[node name="HubPosition" type="Marker2D" parent="." groups=["hub"]]
-position = Vector2(1040, 1273)
 
 [node name="CreepSquare" type="Sprite2D" parent="."]
 position = Vector2(980, 456)

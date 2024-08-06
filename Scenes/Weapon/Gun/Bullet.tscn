@@ -30,6 +30,7 @@ shape = SubResource("RectangleShape2D_5pqbv")
 position = Vector2(-17, 0)
 rotation = -1.57056
 target_position = Vector2(0.00898124, 38)
+collision_mask = 49
 damage_value = 3
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]

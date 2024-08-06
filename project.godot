@@ -43,6 +43,7 @@ gra=false
 entity_layer=""
 player_ui=""
 hub=""
+creep_layer=""
 
 [gui]
 

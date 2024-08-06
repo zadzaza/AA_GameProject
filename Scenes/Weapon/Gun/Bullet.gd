@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Bullet
 # Этот скрипт управляет поведением и движением снарядов
 
 @export var gravity = 440  # Гравитация, действующая на персонажа

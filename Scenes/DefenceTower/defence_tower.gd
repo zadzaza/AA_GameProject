@@ -18,7 +18,7 @@ enum TOWER_TEAM {
 @onready var creep_spawn: Marker2D = $CreepSpawn
 @onready var interact_tower_btn: Control = load("res://UI/Interaction/interact_tower_btn.tscn").instantiate()  # Кнопка взаимодействия с башней
 @onready var add_creep_btn: Control = load("res://UI/Interaction/add_creep_btn.tscn").instantiate()  # Кнопка добавления врагов
-@onready var entity_layer: Node2D = get_tree().get_first_node_in_group("entity_layer")  # Слой сущностей
+@onready var creep_layer: Node2D = get_tree().get_first_node_in_group("creep_layer")  # Слой сущностей
 
 func _ready() -> void:
 	var player_ui: Control = get_tree().get_first_node_in_group("player_ui")  # Ссылка на UI игрока
@@ -86,12 +86,11 @@ func _on_player_creep_spawn(player: Player):
 		creep.set_collision_layer_value(8, true)  # Значение 8 - creep_team2
 		
 	creep.scale.x = self.scale.x
-	entity_layer.add_child(creep)
 	creep.global_position = creep_spawn.global_position
+	creep_layer.add_child(creep)
 
 func apply_damage(damage_value: int, block_name: String, offset: float):
 	tower_strength.value -= damage_value  # Уменьшение прочности башни
-
 	animate_block(block_name, offset)
 
 func animate_block(block_name: String, offset: float):
