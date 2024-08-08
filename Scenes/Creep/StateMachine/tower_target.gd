@@ -1,9 +1,7 @@
-extends Node
-class_name State
+extends State
+class_name TowerTarget
 
-signal transitioned
-
-@export var creep: Creep
+@onready var tower_direction: Vector2
 
 func enter() -> void:
 	pass

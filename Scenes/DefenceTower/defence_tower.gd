@@ -6,6 +6,7 @@ enum TOWER_TEAM {
 	TEAM1,
 	TEAM2
 }
+
 @export var current_tower_team: TOWER_TEAM
 @export var max_strength_value: int  # Максимальное значение прочности башни
 
@@ -70,7 +71,7 @@ func _on_button_visible_area_body_exited(player: Player) -> void:
 	add_creep_btn.close()  # Закрытие кнопки добавления врагов
 	interact_tower_btn.close()  # Закрытие кнопки взаимодействия с башней
 
-func _on_player_interact(player: Player):
+func _on_player_interact(player: Player) -> void:
 	player.replace_to_pos(watchtower_spawn.global_position)
 
 func _on_player_creep_spawn(player: Player):
@@ -85,16 +86,18 @@ func _on_player_creep_spawn(player: Player):
 	else:
 		creep.set_collision_layer_value(8, true)  # Значение 8 - creep_team2
 		
-	creep.scale.x = self.scale.x
-	creep.global_position = creep_spawn.global_position
+	creep.replace_to_pos(creep_spawn.global_position)
 	creep_layer.add_child(creep)
 
 func apply_damage(damage_value: int, block_name: String, offset: float):
 	tower_strength.value -= damage_value  # Уменьшение прочности башни
 	animate_block(block_name, offset)
 
-func animate_block(block_name: String, offset: float):
+func animate_block(block_name: String, offset: float) -> void:
 	var tween = create_tween().set_parallel() # Создание параллельной анимации
 	var shake_block = get_node(NodePath(block_name + "/" + block_name)) # Поиск блока, к которому применять анимацию
 	tween.tween_property(shake_block, "position:x", 0, 0.2).from((7 * offset) * scale.x) # Изменение позиции блока
 	tween.tween_property(shake_block, "modulate", Color.WHITE, 0.2).from(Color(0.75, 0.75, 0.75, 1.0)) # Изменение modulate блока от сероватого к нативному
+
+func get_current_team() -> TOWER_TEAM:
+	return current_tower_team

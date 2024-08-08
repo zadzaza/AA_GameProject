@@ -87,7 +87,7 @@ func _integrate_forces(state) -> void:
 		
 		if collision_normal.dot(Vector2(0, -1)) > .6:
 			found_floor = true
-			floor_index = contact_index
+			#floor_index = contact_index
 
 	# A good idea when implementing characters of all kinds,
 	# compensates for physics imprecision, as well as human reaction delay.
@@ -119,7 +119,7 @@ func _integrate_forces(state) -> void:
 			if velocity.x < WALK_MAX_VELOCITY:
 				velocity.x += WALK_ACCEL * step
 		else:
-			var xv = abs(velocity.x)
+			var xv = absf(velocity.x)
 			xv -= WALK_DEACCEL * step
 			if xv < 0:
 				xv = 0
@@ -131,7 +131,7 @@ func _integrate_forces(state) -> void:
 			jumping = true
 			stopping_jump = false
 
-		if abs(velocity.x) > 195 and (move_left or move_right):
+		if absf(velocity.x) > 195 and (move_left or move_right):
 			trace.emitting = true
 	else:
 		# Process logic when the character is in the air.
@@ -149,9 +149,9 @@ func _integrate_forces(state) -> void:
 			velocity.x = sign(velocity.x) * xv
 			
 	# Apply floor velocity.
-	if found_floor:
-		floor_h_velocity = state.get_contact_collider_velocity_at_position(floor_index).x
-		velocity.x += floor_h_velocity
+	#if found_floor:
+		#floor_h_velocity = state.get_contact_collider_velocity_at_position(floor_index).x
+		#velocity.x += floor_h_velocity
 
 	# Finally, apply gravity and set back the linear velocity.
 	velocity += state.get_total_gravity() * step

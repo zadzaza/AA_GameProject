@@ -1,7 +1,9 @@
-Wait
-Node
+RayCast2D
+TowerTarget
 CollisionShape2D
 Area2D
+RigidBody2D
+Node
 Node2D
 Timer
 ProgressBar
@@ -9,6 +11,5 @@ Marker2D
 CharacterBody2D
 AnimationPlayer
 ColorRect
-RigidBody2D
 Control
 MarginContainer

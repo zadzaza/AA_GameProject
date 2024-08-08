@@ -30,7 +30,7 @@ size = Vector2(252, 380)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yb0e2"]
 size = Vector2(78, 202)
 
-[node name="DefenceTower" type="Node2D"]
+[node name="DefenceTower" type="Node2D" groups=["tower"]]
 script = ExtResource("1_b68ol")
 max_strength_value = 1000
 

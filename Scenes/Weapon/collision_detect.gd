@@ -13,9 +13,8 @@ func _physics_process(delta: float) -> void:
 			object.queue_free()
 		if object is Player:
 			object.push(direction_to * strength)  # Применение толчка к объекту типа Player
-			object.set_linear_velocity(direction_to * 2000)
 		if object is Creep:
-			object.push_up(50)  # Применение верхнего толчка к объекту типа Creep
+			object.push(direction_to * strength*2, 35)  # Применение толчка к объекту типа Creep
 		if object.name in ["HigherBlock", "MiddleBlock", "LowerBlock"]:
 			object.get_parent().apply_damage(damage_value, object.name, sign(direction_to.x))  # Применение урона к объекту блока
 			
