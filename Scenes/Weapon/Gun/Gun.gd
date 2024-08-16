@@ -8,6 +8,7 @@ extends RigidBody2D
 @onready var trajectory: Line2D = $Trajectory  # Линия для отображения траектории
 @onready var entity_layer: Node2D = get_tree().get_first_node_in_group("entity_layer")  # Слой сущностей
 @onready var player: Player = get_parent().get_parent()  # Ссылка на игрока
+@onready var bullet: PackedScene = preload("res://Scenes/Weapon/Gun/Bullet.tscn")
 
 var can_shoot: bool = true  # Флаг возможности стрельбы
 var is_stun: bool = false  # Флаг оглушения
@@ -23,12 +24,12 @@ func _physics_process(delta: float) -> void:
 	if can_shoot and not is_stun:
 		if Input.is_action_just_pressed("attack"):
 			var mouse_vec = self.global_position.direction_to(get_global_mouse_position())
-			var bullet = load("res://Scenes/Weapon/Gun/Bullet.tscn").instantiate()
+			var bullet_instance = bullet.instantiate()
 
-			add_child(bullet)
-			bullet.reparent(entity_layer)
-			bullet.global_transform = bullet_spawn.global_transform
-			bullet.vel = bullet.transform.x * firing_force
+			add_child(bullet_instance)
+			bullet_instance.reparent(entity_layer)
+			bullet_instance.global_transform = bullet_spawn.global_transform
+			bullet_instance.vel = bullet_instance.transform.x * firing_force
 
 			explosion.gravity.x = mouse_vec.x
 			explosion.gravity.y = mouse_vec.y

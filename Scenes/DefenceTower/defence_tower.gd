@@ -11,7 +11,6 @@ enum TOWER_TEAM {
 @export var max_strength_value: int  # Максимальное значение прочности башни
 
 @onready var offset_area: Area2D = $OffsetArea
-@onready var creep_area: Area2D = $CreepArea
 @onready var tower_strength: ProgressBar = $TowerStrength  # Индикатор прочности башни
 @onready var interact_tower_btn_spawn: Marker2D = $InteractTowerBtnSpawn  # Позиция для кнопки взаимодействия с башней
 @onready var add_creep_btn_spawn: Marker2D = $AddCreepBtnSpawn  # Позиция для кнопки добавления врагов
@@ -20,6 +19,7 @@ enum TOWER_TEAM {
 @onready var interact_tower_btn: Control = load("res://UI/Interaction/interact_tower_btn.tscn").instantiate()  # Кнопка взаимодействия с башней
 @onready var add_creep_btn: Control = load("res://UI/Interaction/add_creep_btn.tscn").instantiate()  # Кнопка добавления врагов
 @onready var creep_layer: Node2D = get_tree().get_first_node_in_group("creep_layer")  # Слой сущностей
+@onready var creep: PackedScene = preload("res://Scenes/Creep/creep.tscn")
 
 func _ready() -> void:
 	var player_ui: Control = get_tree().get_first_node_in_group("player_ui")  # Ссылка на UI игрока
@@ -75,19 +75,16 @@ func _on_player_interact(player: Player) -> void:
 	player.replace_to_pos(watchtower_spawn.global_position)
 
 func _on_player_creep_spawn(player: Player):
-	for body in creep_area.get_overlapping_bodies():
-		if body is Creep:
-			return
 	
-	var creep: Creep = load("res://Scenes/Creep/creep.tscn").instantiate()
+	var creep_instance: Creep = creep.instantiate()
 	
 	if current_tower_team == TOWER_TEAM.TEAM1:
-		creep.set_collision_layer_value(7, true)  # Значение 7 - creep_team1
+		creep_instance.set_collision_layer_value(7, true)  # Значение 7 - creep_team1
 	else:
-		creep.set_collision_layer_value(8, true)  # Значение 8 - creep_team2
+		creep_instance.set_collision_layer_value(8, true)  # Значение 8 - creep_team2
 		
-	creep.replace_to_pos(creep_spawn.global_position)
-	creep_layer.add_child(creep)
+	creep_instance.replace_to_pos(creep_spawn.global_position)
+	creep_layer.add_child(creep_instance)
 
 func apply_damage(damage_value: int, block_name: String, offset: float):
 	tower_strength.value -= damage_value  # Уменьшение прочности башни

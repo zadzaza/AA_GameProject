@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://c77npuwg2taw"]
+
+[ext_resource type="Texture2D" uid="uid://cmnkqlexmi0e4" path="res://Sprites/Tiles/item_sword.png" id="1_0xjy5"]
+[ext_resource type="Script" path="res://Scenes/Weapon/Sword/sword.gd" id="1_a4k58"]
+[ext_resource type="Texture2D" uid="uid://d3wmw8t7dt8c5" path="res://Sprites/Tiles/character_handRed.png" id="2_4r0k6"]
+[ext_resource type="AnimationLibrary" uid="uid://bn245fvrj64f1" path="res://Resources/Animation/sword_anim_lib.tres" id="4_6x5vx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tl2tb"]
+radius = 12.0416
+
+[node name="Sword" type="RigidBody2D"]
+gravity_scale = 0.0
+script = ExtResource("1_a4k58")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Node2D" type="Node2D" parent="Visual"]
+
+[node name="ItemSword" type="Sprite2D" parent="Visual/Node2D"]
+position = Vector2(0, -42)
+texture = ExtResource("1_0xjy5")
+
+[node name="CharacterHandRed" type="Sprite2D" parent="Visual/Node2D"]
+position = Vector2(0, -1)
+texture = ExtResource("2_4r0k6")
+
+[node name="RayCast2D" type="RayCast2D" parent="Visual/Node2D"]
+target_position = Vector2(0, -104)
+collision_mask = 224
+hit_from_inside = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tl2tb")
+disabled = true
+
+[node name="PunchAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": ExtResource("4_6x5vx")
+}
+speed_scale = 1.5
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

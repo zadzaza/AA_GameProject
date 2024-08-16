@@ -1,9 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://7as018x3slir"]
+[gd_scene load_steps=16 format=3 uid="uid://7as018x3slir"]
 
 [ext_resource type="Script" path="res://Scenes/Creep/creep.gd" id="1_27qxg"]
-[ext_resource type="Script" path="res://Scenes/Creep/StateMachine/state_machine.gd" id="2_40iqk"]
-[ext_resource type="Script" path="res://Scenes/Creep/StateMachine/tower_target.gd" id="3_xbocr"]
 [ext_resource type="Texture2D" uid="uid://driqvgq4r5udo" path="res://Sprites/Tiles/creep_square.png" id="6_ye77f"]
+[ext_resource type="PackedScene" uid="uid://c77npuwg2taw" path="res://Scenes/Weapon/Sword/sword.tscn" id="7_75kio"]
 [ext_resource type="Texture2D" uid="uid://bh01r37u86jfg" path="res://Sprites/CreepEmotions/face_f.png" id="7_cv6rr"]
 [ext_resource type="Texture2D" uid="uid://crii0ivukm2on" path="res://Sprites/Tiles/item_hat.png" id="8_fjgyr"]
 
@@ -12,7 +11,10 @@ friction = 0.0
 bounce = 0.5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bq1hl"]
-radius = 652.0
+radius = 1276.01
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5400i"]
+size = Vector2(272, 167)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ye5r1"]
 size = Vector2(78, 80)
@@ -55,6 +57,67 @@ _data = {
 "walk": SubResource("Animation_6emhe")
 }
 
+[sub_resource type="Animation" id="Animation_kaasu"]
+resource_name = "punch"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SwordTransform:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 0.0947323),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-15, 0), Vector2(20, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwordTransform:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 2.63901),
+"update": 0,
+"values": [0.0, -0.436332, 1.39626]
+}
+
+[sub_resource type="Animation" id="Animation_m4jrp"]
+resource_name = "return"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SwordTransform:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwordTransform:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xdsv7"]
+_data = {
+"punch": SubResource("Animation_kaasu"),
+"return": SubResource("Animation_m4jrp")
+}
+
 [node name="Creep" type="RigidBody2D"]
 collision_layer = 0
 mass = 100.0
@@ -65,14 +128,6 @@ lock_rotation = true
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_27qxg")
-
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
-script = ExtResource("2_40iqk")
-initial_state = NodePath("TowerTarget")
-
-[node name="TowerTarget" type="Node" parent="StateMachine" node_paths=PackedStringArray("creep")]
-script = ExtResource("3_xbocr")
-creep = NodePath("../..")
 
 [node name="Visual" type="Node2D" parent="."]
 
@@ -95,17 +150,33 @@ texture = ExtResource("7_cv6rr")
 position = Vector2(-1, -53)
 texture = ExtResource("8_fjgyr")
 
-[node name="FindFloor" type="RayCast2D" parent="."]
-enabled = false
-target_position = Vector2(0, 42)
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2(0, 5)
+node_a = NodePath("..")
+node_b = NodePath("../Sword")
+softness = 2.0
+
+[node name="Sword" parent="." instance=ExtResource("7_75kio")]
+
+[node name="SwordTransform" type="Marker2D" parent="."]
+gizmo_extents = 17.0
 
 [node name="CheckArea" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 32
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CheckArea"]
 shape = SubResource("CircleShape2D_bq1hl")
 debug_color = Color(0.952941, 0, 0.564706, 0.0705882)
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(0, -21.5)
+shape = SubResource("RectangleShape2D_5400i")
+debug_color = Color(0.783707, 0.358501, 0.637359, 0.42)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
@@ -117,3 +188,21 @@ libraries = {
 "": SubResource("AnimationLibrary_rbvey")
 }
 speed_scale = 4.0
+
+[node name="PunchAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xdsv7")
+}
+
+[node name="Label" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -128.0
+offset_right = 20.0
+offset_bottom = -105.0
+theme_override_colors/font_color = Color(0.752941, 0, 0, 1)
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="CheckArea" to="." method="_on_check_area_body_entered"]
+[connection signal="body_exited" from="CheckArea" to="." method="_on_check_area_body_exited"]
+[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="AttackArea" to="." method="_on_attack_area_body_exited"]

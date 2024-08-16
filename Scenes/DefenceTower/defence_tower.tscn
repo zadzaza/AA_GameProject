@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://daxyvkoinhkve"]
+[gd_scene load_steps=13 format=3 uid="uid://daxyvkoinhkve"]
 
 [ext_resource type="Script" path="res://Scenes/DefenceTower/defence_tower.gd" id="1_b68ol"]
 [ext_resource type="Texture2D" uid="uid://dk1861uo1tf2w" path="res://Sprites/Tiles/tile_castle.png" id="1_do8j5"]
@@ -26,9 +26,6 @@ size = Vector2(251.5, 380)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_68yfb"]
 size = Vector2(252, 380)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yb0e2"]
-size = Vector2(78, 202)
 
 [node name="DefenceTower" type="Node2D" groups=["tower"]]
 script = ExtResource("1_b68ol")
@@ -116,14 +113,6 @@ collision_mask = 6
 position = Vector2(0, -123)
 shape = SubResource("RectangleShape2D_68yfb")
 debug_color = Color(0.973495, 0, 0.434532, 0)
-
-[node name="CreepArea" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 192
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CreepArea"]
-position = Vector2(0, -37)
-shape = SubResource("RectangleShape2D_yb0e2")
 
 [node name="InteractTowerBtnSpawn" type="Marker2D" parent="."]
 position = Vector2(106, -90)

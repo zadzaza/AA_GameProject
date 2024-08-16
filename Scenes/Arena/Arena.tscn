@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cmuk4qa5qvni7"]
+[gd_scene load_steps=10 format=3 uid="uid://cmuk4qa5qvni7"]
 
 [ext_resource type="Script" path="res://Scenes/Arena/arena.gd" id="1_66tcb"]
 [ext_resource type="TileSet" uid="uid://d3h56ynjxvox3" path="res://Resources/Tilemap/ArenaTileSet.tres" id="2"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://bsbsx224gyg0t" path="res://Sprites/spritesheet_retina.png" id="6_55faa"]
 [ext_resource type="PackedScene" uid="uid://ddl7qrpfgah7s" path="res://Scenes/Arena/remove_area.tscn" id="7_n1o10"]
 [ext_resource type="PackedScene" uid="uid://daxyvkoinhkve" path="res://Scenes/DefenceTower/defence_tower.tscn" id="8_g4w6t"]
-[ext_resource type="Texture2D" uid="uid://driqvgq4r5udo" path="res://Sprites/Tiles/creep_square.png" id="9_qv5q8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bdunm"]
 size = Vector2(1910, 246.75)
@@ -73,13 +72,9 @@ offset_bottom = 40.0
 
 [node name="RemoveArea" parent="." instance=ExtResource("7_n1o10")]
 
-[node name="DefenceTower" parent="." instance=ExtResource("8_g4w6t")]
+[node name="DefenceTower1" parent="." instance=ExtResource("8_g4w6t")]
 position = Vector2(542, 785)
 
 [node name="DefenceTower2" parent="." instance=ExtResource("8_g4w6t")]
 position = Vector2(1376, 785)
 current_tower_team = 1
-
-[node name="CreepSquare" type="Sprite2D" parent="."]
-position = Vector2(980, 456)
-texture = ExtResource("9_qv5q8")
