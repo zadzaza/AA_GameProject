@@ -7,12 +7,12 @@ signal creep_spawn(player: Player)
 
 @export var layer = 2
 
-const WALK_ACCEL = 1220.0 
-const WALK_DEACCEL = 1220.0
+const WALK_ACCEL = 1320.0 
+const WALK_DEACCEL = 1320.0
 const WALK_MAX_VELOCITY = 230.0
 const AIR_ACCEL = 350.0
 const AIR_DEACCEL = 350.0
-const JUMP_VELOCITY = 455.0
+const JUMP_VELOCITY = 560.0
 const STOP_JUMP_FORCE = 525.0
 const MAX_SHOOT_POSE_TIME = .3
 const MAX_FLOOR_AIRBORNE_TIME = .15
@@ -22,6 +22,7 @@ var jumping: bool = false
 var stopping_jump: bool = false
 var shooting: bool = false
 var is_flipping: bool = false
+var can_descend: bool = false
 
 var floor_h_velocity: float = 0.0
 
@@ -33,8 +34,8 @@ var force_var: Vector2
 var is_replace: bool = false
 var pos_to_replace: Vector2
 
-@onready var visual = $VisualPlayer as Node2D
-@onready var walk_animation = $WalkAnimation as AnimationPlayer
+@onready var visual: Node2D = $VisualPlayer
+@onready var walk_animation: AnimationPlayer = $WalkAnimation
 @onready var trace: CPUParticles2D = $Trace
 @onready var pin_joint_2d: PinJoint2D = $PinJoint2D
 
@@ -51,7 +52,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("creep_spawn"):
 		self.creep_spawn.emit(self)
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if is_replace:
 		set_linear_velocity(Vector2.ZERO)
 		self.global_position = pos_to_replace
@@ -98,7 +99,10 @@ func _integrate_forces(state) -> void:
 		airborne_time += step # Time it spent in the air.
 
 	var on_floor := airborne_time < MAX_FLOOR_AIRBORNE_TIME
-
+	
+	if Input.is_action_pressed("ui_down"):
+			self.set_collision_mask_value(4, false)
+			
 	# Process jump.
 	if jumping:
 		if velocity.y > 0:

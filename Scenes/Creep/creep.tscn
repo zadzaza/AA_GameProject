@@ -14,7 +14,7 @@ bounce = 0.5
 radius = 1276.01
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5400i"]
-size = Vector2(272, 167)
+size = Vector2(272, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ye5r1"]
 size = Vector2(78, 80)
@@ -136,7 +136,6 @@ offset_left = -30.0
 offset_top = -31.0
 offset_right = 31.0
 offset_bottom = 31.0
-color = Color(0.988235, 0.360784, 0.396078, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="CreepSquare" type="Sprite2D" parent="Visual"]
@@ -162,6 +161,7 @@ softness = 2.0
 gizmo_extents = 17.0
 
 [node name="CheckArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 0
 
@@ -170,15 +170,17 @@ shape = SubResource("CircleShape2D_bq1hl")
 debug_color = Color(0.952941, 0, 0.564706, 0.0705882)
 
 [node name="AttackArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(0, -21.5)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_5400i")
 debug_color = Color(0.783707, 0.358501, 0.637359, 0.42)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_ye5r1")
 debug_color = Color(0.168627, 0.627451, 0.439216, 0.341176)

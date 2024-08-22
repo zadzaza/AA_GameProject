@@ -80,8 +80,10 @@ func _on_player_creep_spawn(player: Player):
 	
 	if current_tower_team == TOWER_TEAM.TEAM1:
 		creep_instance.set_collision_layer_value(7, true)  # Значение 7 - creep_team1
+		#creep_instance.set_color(Color(0.988, 0.361, 0.396))
 	else:
 		creep_instance.set_collision_layer_value(8, true)  # Значение 8 - creep_team2
+		#creep_instance.set_color(Color(0.566, 0.574, 0.854))
 		
 	creep_instance.replace_to_pos(creep_spawn.global_position)
 	creep_layer.add_child(creep_instance)

@@ -8,6 +8,7 @@ signal punch_finished
 @onready var punch_animation_pl: AnimationPlayer = $PunchAnimation
 @onready var timer: Timer = $Timer
 @onready var ray_cast_2d: RayCast2D = $Visual/Node2D/RayCast2D
+@onready var hand: Node2D = $Visual/Node2D/Hand
 
 var direction_x: float
 var is_push: bool = false
@@ -32,7 +33,7 @@ func punch(direction_x: float):
 	punch_finished.emit()
 
 
-func push():
+func push() -> void:
 	if ray_cast_2d.is_colliding():
 		var object = ray_cast_2d.get_collider()
 		if object is Creep:

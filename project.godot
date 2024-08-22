@@ -136,6 +136,7 @@ creep_spawn={
 2d_physics/layer_1="ground"
 2d_physics/layer_2="team1"
 2d_physics/layer_3="team2"
+2d_physics/layer_4="platform"
 2d_physics/layer_5="projectiles"
 2d_physics/layer_6="tower"
 2d_physics/layer_7="creep_team1"

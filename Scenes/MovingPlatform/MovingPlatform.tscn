@@ -12,7 +12,7 @@ size = Vector2(72, 18)
 z_index = -1
 position = Vector2(0, -9)
 
-[node name="Platform" type="AnimatableBody2D" parent="."]
+[node name="Platform" type="CharacterBody2D" parent="."]
 rotation = 1.5708
 
 [node name="ColorRect" type="ColorRect" parent="Platform"]
@@ -43,4 +43,5 @@ script = ExtResource("1_xbnef")
 marker = NodePath("../../Marker2D")
 
 [node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(-1, -581)
+position = Vector2(228, 0)
+gizmo_extents = 31.0

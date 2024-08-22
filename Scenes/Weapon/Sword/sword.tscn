@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cmnkqlexmi0e4" path="res://Sprites/Tiles/item_sword.png" id="1_0xjy5"]
 [ext_resource type="Script" path="res://Scenes/Weapon/Sword/sword.gd" id="1_a4k58"]
-[ext_resource type="Texture2D" uid="uid://d3wmw8t7dt8c5" path="res://Sprites/Tiles/character_handRed.png" id="2_4r0k6"]
+[ext_resource type="PackedScene" uid="uid://c8r0sey67h2hr" path="res://Scenes/hand.tscn" id="3_rl0cd"]
 [ext_resource type="AnimationLibrary" uid="uid://bn245fvrj64f1" path="res://Resources/Animation/sword_anim_lib.tres" id="4_6x5vx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tl2tb"]
@@ -20,16 +20,15 @@ script = ExtResource("1_a4k58")
 position = Vector2(0, -42)
 texture = ExtResource("1_0xjy5")
 
-[node name="CharacterHandRed" type="Sprite2D" parent="Visual/Node2D"]
-position = Vector2(0, -1)
-texture = ExtResource("2_4r0k6")
+[node name="Hand" parent="Visual/Node2D" instance=ExtResource("3_rl0cd")]
 
 [node name="RayCast2D" type="RayCast2D" parent="Visual/Node2D"]
-target_position = Vector2(0, -104)
+target_position = Vector2(0, -106)
 collision_mask = 224
 hit_from_inside = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_tl2tb")
 disabled = true
 

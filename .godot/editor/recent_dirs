@@ -1,3 +1,6 @@
+res://Scenes
+res://Resources/Theme
+res://Scenes/Arena
 D:/Godot
 res://Resources/Animation
 res://Scenes/Weapon/Sword
@@ -7,9 +10,6 @@ res://Scenes/Creep
 res://
 res://Scenes/Effects
 res://Scenes/Player
-res://Resources/Theme
 res://Scenes/Weapon
-res://Scenes
 res://Scenes/Weapon/Bow
 res://Component
-res://Scenes/Arena

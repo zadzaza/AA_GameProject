@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cmuk4qa5qvni7"]
+[gd_scene load_steps=12 format=3 uid="uid://cmuk4qa5qvni7"]
 
 [ext_resource type="Script" path="res://Scenes/Arena/arena.gd" id="1_66tcb"]
 [ext_resource type="TileSet" uid="uid://d3h56ynjxvox3" path="res://Resources/Tilemap/ArenaTileSet.tres" id="2"]
@@ -7,12 +7,16 @@
 [ext_resource type="Texture2D" uid="uid://bsbsx224gyg0t" path="res://Sprites/spritesheet_retina.png" id="6_55faa"]
 [ext_resource type="PackedScene" uid="uid://ddl7qrpfgah7s" path="res://Scenes/Arena/remove_area.tscn" id="7_n1o10"]
 [ext_resource type="PackedScene" uid="uid://daxyvkoinhkve" path="res://Scenes/DefenceTower/defence_tower.tscn" id="8_g4w6t"]
+[ext_resource type="PackedScene" uid="uid://kjen34bt1yum" path="res://Scenes/MovingPlatform/MovingPlatform.tscn" id="9_wwl68"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bdunm"]
 size = Vector2(1910, 246.75)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6jgo0"]
 size = Vector2(122, 119)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2m8k0"]
+size = Vector2(236, 0)
 
 [node name="Arena" type="Node2D"]
 script = ExtResource("1_66tcb")
@@ -25,7 +29,7 @@ position = Vector2(8, 11)
 tile_set = ExtResource("2")
 format = 2
 layer_0/name = "middleground"
-layer_0/tile_data = PackedInt32Array(196623, 196631, 1, 262144, 327703, 7, 262159, 327703, 7, 327680, 327703, 8, 327695, 327703, 8, 393216, 131095, 5, 393217, 131095, 9, 393230, 131095, 65545, 393231, 131095, 5, 458752, 393239, 8, 458753, 393239, 8, 458754, 196631, 6, 458755, 131095, 5, 458756, 327703, 5, 458757, 327703, 4, 458758, 393239, 4, 458759, 393239, 4, 458760, 393239, 4, 458761, 393239, 4, 458762, 327703, 4, 458763, 327703, 5, 458764, 131095, 5, 458765, 131095, 5, 458766, 131095, 6, 458767, 393239, 8, 524288, 327703, 9, 524289, 327703, 9, 524290, 327703, 9, 524291, 327703, 9, 524292, 327703, 5, 524293, 131095, 1, 524294, 131095, 1, 524295, 131095, 1, 524296, 131095, 1, 524297, 131095, 1, 524298, 131095, 1, 524299, 327703, 5, 524300, 327703, 9, 524301, 327703, 9, 524302, 327703, 9, 524303, 327703, 9, 196608, 196631, 1)
+layer_0/tile_data = PackedInt32Array(196623, 196631, 1, 262144, 327703, 7, 262159, 327703, 7, 327680, 327703, 8, 327695, 327703, 8, 393216, 131095, 5, 393217, 131095, 9, 393230, 131095, 65545, 393231, 131095, 5, 458752, 393239, 8, 458753, 393239, 8, 458754, 196631, 6, 458755, 131095, 5, 458756, 327703, 5, 458757, 327703, 4, 458758, 393239, 4, 458759, 393239, 4, 458760, 393239, 4, 458761, 393239, 4, 458762, 327703, 4, 458763, 327703, 5, 458764, 131095, 5, 458765, 131095, 5, 458766, 131095, 6, 458767, 393239, 8, 524288, 327703, 9, 524289, 327703, 9, 524290, 327703, 9, 524291, 327703, 9, 524292, 327703, 5, 524293, 131095, 1, 524294, 131095, 1, 524295, 131095, 1, 524296, 131095, 1, 524297, 131095, 1, 524298, 131095, 1, 524299, 327703, 5, 524300, 327703, 9, 524301, 327703, 9, 524302, 327703, 9, 524303, 327703, 9, 196608, 196631, 1, 65538, 5, 65536, 65539, 5, 65536, 65548, 5, 65536, 65549, 5, 65536, 65550, 5, 65536, 393222, 5, 131072, 327686, 5, 131072, 262150, 5, 131072, 393219, 5, 131072, 327683, 5, 131072, 262147, 5, 131072, 196611, 5, 131072, 131075, 5, 131072)
 layer_1/name = "background"
 layer_1/z_index = -2
 layer_1/tile_data = PackedInt32Array(393219, 655383, 7, 327692, 655383, 4, 393228, 655383, 5, 393230, 655383, 6, 524294, 393239, 6, 524295, 393239, 6, 524296, 393239, 6, 524297, 393239, 6, 393221, 262167, 1, 393222, 262167, 1, 393223, 262167, 1, 393224, 262167, 1, 393225, 262167, 1, 393226, 262167, 1, 327682, 655383, 2, 393218, 655383, 3)
@@ -45,6 +49,16 @@ shape = SubResource("RectangleShape2D_6jgo0")
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="TileMap/StaticBody2D"]
 position = Vector2(1836.5, -69.5)
 shape = SubResource("RectangleShape2D_6jgo0")
+
+[node name="Platforms" type="StaticBody2D" parent="TileMap"]
+collision_layer = 8
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Platforms"]
+z_index = 1
+position = Vector2(359, 181)
+shape = SubResource("RectangleShape2D_2m8k0")
+one_way_collision = true
 
 [node name="Entity" type="Node2D" parent="." groups=["entity_layer"]]
 
@@ -78,3 +92,8 @@ position = Vector2(542, 785)
 [node name="DefenceTower2" parent="." instance=ExtResource("8_g4w6t")]
 position = Vector2(1376, 785)
 current_tower_team = 1
+
+[node name="PlatformB" type="Node2D" parent="."]
+
+[node name="MovingPlatform" parent="." instance=ExtResource("9_wwl68")]
+position = Vector2(536, 204)

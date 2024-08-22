@@ -33,6 +33,7 @@ var sword_offset = 33  # Положение меча относительно н
 var in_attack_area: bool = false
 
 func _ready() -> void:
+	print(get_tree().get_nodes_in_group("creep_layer"))
 	set_targets()
 	
 	sword.punch_started.connect(_on_punch_started)
@@ -52,6 +53,8 @@ func set_targets() -> void:
 		sword.ray_cast_2d.set_collision_mask_value(7, false)
 		sword.ray_cast_2d.set_collision_mask_value(8, true)
 		
+		set_color(Color(0.988, 0.361, 0.396))
+		
 		for t in towers:
 			if t.get_current_team() == 1:
 				enemy_tower = t
@@ -65,6 +68,8 @@ func set_targets() -> void:
 		
 		sword.ray_cast_2d.set_collision_mask_value(7, true)
 		sword.ray_cast_2d.set_collision_mask_value(8, false)
+		
+		set_color(Color(0.569, 0.475, 1))
 		
 		for t in towers:
 			if t.get_current_team() == 0:
@@ -154,10 +159,10 @@ func replace_to_pos(pos: Vector2) -> void:
 func _on_check_area_body_entered(creep: Creep) -> void:
 	is_tower_target = false
 
-func _on_punch_started():
+func _on_punch_started() -> void:
 	is_punch = true
 
-func _on_punch_finished():
+func _on_punch_finished() -> void:
 	is_punch = false
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
@@ -165,3 +170,7 @@ func _on_attack_area_body_entered(body: Node2D) -> void:
 
 func _on_attack_area_body_exited(body: Node2D) -> void:
 	in_attack_area = false
+
+func set_color(color: Color) -> void:
+	($Visual/ColorRect as ColorRect).color = color
+	(sword.hand.get_node("Panel") as Panel).modulate = color
